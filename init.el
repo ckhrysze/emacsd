@@ -49,8 +49,22 @@
 (delete-selection-mode 1)
 (column-number-mode 1)
 
+(require 'filesets+)
+(filesets-init) ; Enable filesets
+
+(autoload 'mode-compile "mode-compile"
+  "Command to compile current buffer file based on the major mode" t)
+(global-set-key "\C-cc" 'mode-compile)
+(autoload 'mode-compile-kill "mode-compile"
+  "Command to kill a compilation launched by `mode-compile'" t)
+(global-set-key "\C-ck" 'mode-compile-kill)
+
+
 ;; more typical line numbers
 (global-linum-mode 1)
+
+(eval-after-load "icomplete" '(progn (require 'icomplete+)))
+
 
 ;; some window numbering
 (add-to-list 'load-path "/path/to/window-numbering")
@@ -65,6 +79,8 @@
 (require 'feature-mode)
 (add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
 
+(require 'compile)
+(require 'rspec-mode)
 
 ;;; messing with colors
 ;; see http://www.gnu.org/software/emacs/manual/html_node/emacs/Standard-Faces.html
