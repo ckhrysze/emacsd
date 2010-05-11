@@ -1,2 +1,4 @@
 eback
 auto-save-list
+*.elc
+custom.el

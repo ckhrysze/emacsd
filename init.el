@@ -115,22 +115,9 @@
 
 ; This installs ecb - it is activated with M-x ecb-activate
 (require 'ecb-autoloads)
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(ecb-layout-name "left13")
- '(ecb-options-version "2.32")
- '(ecb-show-sources-in-directories-buffer (quote ("left7" "left13" "left14" "left15")))
- '(ecb-source-path (quote (("/home/ckhrysze/code/blc/likeassets/rails" "mp_rails") ("/home/ckhrysze/code/blc/likeassets/flex" "mp_flex") ("/home/ckhrysze/code/magic/deckapp" "magic") ("/home/ckhrysze/code/don/game" "drcgame"))))
- '(ecb-tip-of-the-day nil))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
+
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
 
 ;; Yegge's js mode
 (autoload 'js2-mode "js2" nil t)
@@ -237,37 +224,6 @@
 	     (just-one-space 0)
 	     (backward-char 1))))
 
-;;; Taken from http://www.emacswiki.org/emacs/OpenNextLine
-
-;; Behave like vi's o command
-(defun open-next-line (arg)
-  "Move to the next line and then opens a line.
-    See also `newline-and-indent'."
-  (interactive "p")
-  (end-of-line)
-  (open-line arg)
-  (next-line 1)
-  (when newline-and-indent
-    (indent-according-to-mode)))
-
-;; Behave like vi's O command
-(defun open-previous-line (arg)
-  "Open a new line before the current one. 
-     See also `newline-and-indent'."
-  (interactive "p")
-  (beginning-of-line)
-  (open-line arg)
-  (when newline-and-indent
-    (indent-according-to-mode)))
-
-;; Autoindent open-*-lines
-(defvar newline-and-indent t
-  "Modify the behavior of the open-*-line functions to cause them to autoindent.")
-
-(global-set-key [S-return]   'open-next-line)
-(global-set-key [C-S-return] 'open-previous-line)
-
-
 ;; http://www.emacswiki.org/emacs/SlickCopy
 (defadvice kill-ring-save (before slick-copy activate compile)
   "When called interactively with no active region, copy a single line instead."
@@ -293,4 +249,3 @@
 ;   Replace regexp: \(.+:\)
 ;   Replace regexp with \#.
 ;
-
