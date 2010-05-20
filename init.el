@@ -27,11 +27,11 @@
 (global-set-key "\C-z" 'undo)
 (global-set-key (kbd "C-<slash>") 'comment-or-uncomment-region)
 (global-set-key "\C-c\C-c" 'comment-or-uncomment-region)
-
 (global-set-key "\C-w" 'clipboard-kill-region)
 (global-set-key "\M-w" 'clipboard-kill-ring-save)
 (global-set-key "\C-y" 'clipboard-yank)
 (global-set-key "\C-v" 'clipboard-yank)
+(global-set-key "\C-t" 'rspec-toggle-spec-and-target)
 
 ;;; bindings to custom functions
 (global-set-key (kbd "C-M-<up>") 'duplicate-line-up)
@@ -48,6 +48,8 @@
 (setq save-abbrevs t)
 (delete-selection-mode 1)
 (column-number-mode 1)
+
+(pymacs-load "pymdev" "pymdev-")
 
 (require 'filesets+)
 (filesets-init) ; Enable filesets
