@@ -100,9 +100,8 @@
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 
 ; for xml files, use nxml-mode instead of sgml-mode
-(add-to-list 'auto-mode-alist '("\\.xml\\'" . nxml-mode))
-(add-to-list 'auto-mode-alist '("\\.html.erb\\'" . nxml-mode))
-(add-to-list 'auto-mode-alist '("\\.xml.erb\\'" . nxml-mode))
+(add-to-list 'auto-mode-alist '("\\.xml$" . nxml-mode))
+(add-to-list 'auto-mode-alist '("\\.erb$" . nxml-mode))
 
 ;These lines are required for ECB
 (setq semantic-load-turn-everything-on t)
@@ -120,6 +119,10 @@
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
+
+;; yaml mode from http://tweedle-dee.org/svn/emacs.d/site-lisp/yaml-mode.el
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 ;; Yegge's js mode
 (autoload 'js2-mode "js2" nil t)
