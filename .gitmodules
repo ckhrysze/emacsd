@@ -1,6 +1,3 @@
 [submodule "cucumber"]
 	path = cucumber
 	url = git://github.com/michaelklishin/cucumber.el
-[submodule "emacs-rails-reloaded"]
-	path = emacs-rails-reloaded
-	url = git://github.com/dima-exe/emacs-rails-reloaded.git
