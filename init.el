@@ -31,7 +31,8 @@
 (global-set-key "\M-w" 'clipboard-kill-ring-save)
 (global-set-key "\C-y" 'clipboard-yank)
 (global-set-key "\C-v" 'clipboard-yank)
-(global-set-key "\C-t" 'rspec-toggle-spec-and-target)
+(global-set-key (kbd "C-;") 'rails/goto)
+(global-set-key "\C-t" 'rails/resources/toggle-test)
 
 ;;; bindings to custom functions
 (global-set-key (kbd "C-M-<up>") 'duplicate-line-up)
@@ -82,7 +83,7 @@
 (add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
 
 (require 'compile)
-(require 'rspec-mode)
+;; (require 'rspec-mode)
 
 ;;; messing with colors
 ;; see http://www.gnu.org/software/emacs/manual/html_node/emacs/Standard-Faces.html
@@ -120,27 +121,32 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-;; yaml mode from http://tweedle-dee.org/svn/emacs.d/site-lisp/yaml-mode.el
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 ;; Yegge's js mode
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
-;; sass-mode
-(require 'sass-mode)
-(add-to-list 'auto-mode-alist '("\\.sass$" . sass-mode))
-
-; when to use ruby mode
-(setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".rake$" . ruby-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '("Rakefile$" . ruby-mode) auto-mode-alist))
-
-
 ;;; actionscript
 (require 'actionscript-mode)
 (add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
+
+
+
+;;; For rails development
+(require 'rails-autoload)
+
+;; (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
+;; (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+;; (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+;; (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+
+;; yaml mode from http://tweedle-dee.org/svn/emacs.d/site-lisp/yaml-mode.el
+;; (require 'yaml-mode)
+;; (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+
+;; sass-mode
+;; (require 'sass-mode)
+;; (add-to-list 'auto-mode-alist '("\\.sass$" . sass-mode))
 
 
 
