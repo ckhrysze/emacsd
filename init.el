@@ -68,8 +68,6 @@
 
 (eval-after-load "icomplete" '(progn (require 'icomplete+)))
 
-(load "~/.emacs.d/nxhtml/autostart.el")
-
 
 ;; some window numbering
 (add-to-list 'load-path "/path/to/window-numbering")
@@ -131,6 +129,8 @@
 ;;; actionscript
 (require 'actionscript-mode)
 (add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
+
+(load "~/.emacs.d/nxhtml/autostart.el")
 
 ;;; For rails development
 (require 'rails-autoload)
