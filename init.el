@@ -68,6 +68,8 @@
 
 (eval-after-load "icomplete" '(progn (require 'icomplete+)))
 
+(ido-mode t)
+(setq ido-enable-flex-matching t) ; fuzzy matching is a must have
 
 ;; some window numbering
 (add-to-list 'load-path "/path/to/window-numbering")
@@ -122,9 +124,6 @@
 (load custom-file)
 
 
-;; Yegge's js mode
-(autoload 'js2-mode "js2" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;;; actionscript
 (require 'actionscript-mode)
@@ -134,6 +133,7 @@
 
 ;;; For rails development
 (require 'rails-autoload)
+(require 'haml-mode)
 
 ;; (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
@@ -149,6 +149,10 @@
 ;; (add-to-list 'auto-mode-alist '("\\.sass$" . sass-mode))
 
 
+
+;; Yegge's js mode
+(autoload 'js2-mode "js2" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;;;
 ;;; custom methods
@@ -251,8 +255,8 @@
      (list (line-beginning-position)
 	   (line-beginning-position 2)))))
 
-(require 'icicles)
-(icy-mode 1)
+;(require 'icicles)
+;(icy-mode 1)
 
 ;;; Notes
 ; auto increment magic (thank yegge!)
