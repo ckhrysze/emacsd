@@ -141,14 +141,16 @@
 ;; (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 
 ;; yaml mode from http://tweedle-dee.org/svn/emacs.d/site-lisp/yaml-mode.el
-;; (require 'yaml-mode)
-;; (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 ;; sass-mode
-;; (require 'sass-mode)
-;; (add-to-list 'auto-mode-alist '("\\.sass$" . sass-mode))
+(require 'sass-mode)
+(add-to-list 'auto-mode-alist '("\\.sass$" . sass-mode))
 
 
+
+(autoload 'javascript-mode "javascript" nil t)
 
 ;; Yegge's js mode
 (autoload 'js2-mode "js2" nil t)
