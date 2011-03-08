@@ -1,389 +1,175 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><title>EmacsWiki: el-expectations.el</title><link rel="alternate" type="application/wiki" title="Edit this page" href="http://www.emacswiki.org/emacs?action=edit;id=el-expectations.el" /><link type="text/css" rel="stylesheet" href="/emacs/wiki.css" /><meta name="robots" content="INDEX,FOLLOW" /><link rel="alternate" type="application/rss+xml" title="EmacsWiki" href="http://www.emacswiki.org/emacs?action=rss" /><link rel="alternate" type="application/rss+xml" title="EmacsWiki: el-expectations.el" href="http://www.emacswiki.org/emacs?action=rss;rcidonly=el-expectations.el" />
-<link rel="alternate" type="application/rss+xml"
-      title="Emacs Wiki with page content"
-      href="http://www.emacswiki.org/emacs/full.rss" />
-<link rel="alternate" type="application/rss+xml"
-      title="Emacs Wiki with page content and diff"
-      href="http://www.emacswiki.org/emacs/full-diff.rss" />
-<link rel="alternate" type="application/rss+xml"
-      title="Emacs Wiki including minor differences"
-      href="http://www.emacswiki.org/emacs/minor-edits.rss" />
-<link rel="alternate" type="application/rss+xml"
-      title="Changes for el-expectations.el only"
-      href="http://www.emacswiki.org/emacs?action=rss;rcidonly=el-expectations.el" /><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/></head><body class="http://www.emacswiki.org/emacs"><div class="header"><a class="logo" href="http://www.emacswiki.org/emacs/SiteMap"><img class="logo" src="/emacs_logo.png" alt="[Home]" /></a><span class="gotobar bar"><a class="local" href="http://www.emacswiki.org/emacs/SiteMap">SiteMap</a> <a class="local" href="http://www.emacswiki.org/emacs/Search">Search</a> <a class="local" href="http://www.emacswiki.org/emacs/ElispArea">ElispArea</a> <a class="local" href="http://www.emacswiki.org/emacs/HowTo">HowTo</a> <a class="local" href="http://www.emacswiki.org/emacs/RecentChanges">RecentChanges</a> <a class="local" href="http://www.emacswiki.org/emacs/News">News</a> <a class="local" href="http://www.emacswiki.org/emacs/Problems">Problems</a> <a class="local" href="http://www.emacswiki.org/emacs/Suggestions">Suggestions</a> </span>
-<!-- Google CSE Search Box Begins  -->
-<form class="tiny" action="http://www.google.com/cse" id="searchbox_004774160799092323420:6-ff2s0o6yi"><p>
-<input type="hidden" name="cx" value="004774160799092323420:6-ff2s0o6yi" />
-<input type="text" name="q" size="25" />
-<input type="submit" name="sa" value="Search" />
-</p></form>
-<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_004774160799092323420%3A6-ff2s0o6yi"></script>
-<!-- Google CSE Search Box Ends -->
-<h1><a title="Click to search for references to this page" rel="nofollow" href="http://www.google.com/cse?cx=004774160799092323420:6-ff2s0o6yi&amp;q=%22el-expectations.el%22">el-expectations.el</a></h1></div><div class="wrapper"><div class="content browse"><p class="download"><a href="download/el-expectations.el">Download</a></p><pre class="code"><span class="linecomment">;;; el-expectations.el --- minimalist unit testing framework</span>
-<span class="linecomment">;; $Id: el-expectations.el,v 1.61 2010/05/04 08:48:22 rubikitch Exp $</span>
+;;; el-expectations.el --- minimalist unit testing framework
+;; Time-stamp: <2010-12-12 17:47:08 rubikitch>
 
-<span class="linecomment">;; Copyright (C) 2008, 2009, 2010  rubikitch</span>
+;; Copyright (C) 2008, 2009, 2010  rubikitch
 
-<span class="linecomment">;; Author: rubikitch &lt;rubikitch@ruby-lang.org&gt;</span>
-<span class="linecomment">;; Keywords: lisp, testing, unittest</span>
-<span class="linecomment">;; URL: http://www.emacswiki.org/cgi-bin/wiki/download/el-expectations.el</span>
+;; Author: rubikitch <rubikitch@ruby-lang.org>
+;; Keywords: lisp, testing, unittest
+;; URL: http://www.emacswiki.org/cgi-bin/wiki/download/el-expectations.el
 
-<span class="linecomment">;; This file is free software; you can redistribute it and/or modify</span>
-<span class="linecomment">;; it under the terms of the GNU General Public License as published by</span>
-<span class="linecomment">;; the Free Software Foundation; either version 2, or (at your option)</span>
-<span class="linecomment">;; any later version.</span>
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 2, or (at your option)
+;; any later version.
 
-<span class="linecomment">;; This file is distributed in the hope that it will be useful,</span>
-<span class="linecomment">;; but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="linecomment">;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span class="linecomment">;; GNU General Public License for more details.</span>
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
 
-<span class="linecomment">;; You should have received a copy of the GNU General Public License</span>
-<span class="linecomment">;; along with GNU Emacs; see the file COPYING.  If not, write to</span>
-<span class="linecomment">;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,</span>
-<span class="linecomment">;; Boston, MA 02110-1301, USA.</span>
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+;; Boston, MA 02110-1301, USA.
 
-<span class="linecomment">;;; Commentary:</span>
+;;; Commentary:
 
-<span class="linecomment">;; Emacs Lisp Expectations framework is a minimalist unit testing</span>
-<span class="linecomment">;; framework in Emacs Lisp.</span>
+;; Emacs Lisp Expectations framework is a minimalist unit testing
+;; framework in Emacs Lisp.
 
-<span class="linecomment">;;; Commands:</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Below are complete command list:</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;;  `expectations-execute'</span>
-<span class="linecomment">;;    Execute last-defined `expectations' test.</span>
-<span class="linecomment">;;  `exps-next-error'</span>
-<span class="linecomment">;;    Move to the Nth (default 1) next failure/error in *expectations result* buffer.</span>
-<span class="linecomment">;;  `expectations-eval-defun'</span>
-<span class="linecomment">;;    Do `eval-defun'.</span>
-<span class="linecomment">;;  `batch-expectations-in-emacs'</span>
-<span class="linecomment">;;    Execute expectations in current file with batch mode.</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;;; Customizable Options:</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Below are customizable option list:</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;;  `expectations-execute-at-once'</span>
-<span class="linecomment">;;    If non-nil, execute selected expectation when pressing C-M-x.</span>
-<span class="linecomment">;;    default = (quote all)</span>
+;;; Commands:
+;;
+;; Below are complete command list:
+;;
+;;  `expectations-execute'
+;;    Execute last-defined `expectations' test.
+;;  `exps-next-error'
+;;    Move to the Nth (default 1) next failure/error in *expectations result* buffer.
+;;  `expectations-eval-defun'
+;;    Do `eval-defun'.
+;;  `batch-expectations-in-emacs'
+;;    Execute expectations in current file with batch mode.
+;;
+;;; Customizable Options:
+;;
+;; Below are customizable option list:
+;;
+;;  `expectations-execute-at-once'
+;;    If non-nil, execute selected expectation when pressing C-M-x.
+;;    default = (quote all)
 
-<span class="linecomment">;; I love Jay Fields' expectations unit testing framework in Ruby. It</span>
-<span class="linecomment">;; provides one syntax and can define various assertions. So I created</span>
-<span class="linecomment">;; Emacs Lisp Expectations modeled after expectations in Ruby.</span>
-<span class="linecomment">;; Testing policy is same as the original expectations in Ruby. Visit</span>
-<span class="linecomment">;; expectations site in rubyforge.</span>
-<span class="linecomment">;; http://expectations.rubyforge.org/</span>
+;; I love Jay Fields' expectations unit testing framework in Ruby. It
+;; provides one syntax and can define various assertions. So I created
+;; Emacs Lisp Expectations modeled after expectations in Ruby.
+;; Testing policy is same as the original expectations in Ruby. Visit
+;; expectations site in rubyforge.
+;; http://expectations.rubyforge.org/
 
-<span class="linecomment">;; With Emacs Lisp Mock (el-mock.el), Emacs Lisp Expectations supports</span>
-<span class="linecomment">;; mock and stub, ie. behavior based testing.</span>
-<span class="linecomment">;; You can get it from EmacsWiki</span>
-<span class="linecomment">;; http://www.emacswiki.org/cgi-bin/wiki/download/el-mock.el</span>
+;; With Emacs Lisp Mock (el-mock.el), Emacs Lisp Expectations supports
+;; mock and stub, ie. behavior based testing.
+;; You can get it from EmacsWiki
+;; http://www.emacswiki.org/cgi-bin/wiki/download/el-mock.el
 
-<span class="linecomment">;;; Usage:</span>
+;;; Usage:
 
-<span class="linecomment">;; 1. Evaluate an expectations sexp.</span>
-<span class="linecomment">;; 2. `M-x expectations-execute' to execute a test.</span>
-<span class="linecomment">;; 3. If there are any errors, use M-x next-error (C-x `) and M-x previous-error</span>
-<span class="linecomment">;;    to go to expect sexp in error.</span>
+;; 1. Evaluate an expectations sexp.
+;; 2. `M-x expectations-execute' to execute a test.
+;; 3. If there are any errors, use M-x next-error (C-x `) and M-x previous-error
+;;    to go to expect sexp in error.
 
-<span class="linecomment">;; If you evaluated expectations by C-M-x, it is automatically executed.</span>
-<span class="linecomment">;; If you type C-u C-u C-M-x, execute expectations with batch-mode.</span>
+;; If you evaluated expectations by C-M-x, it is automatically executed.
+;; If you type C-u C-u C-M-x, execute expectations with batch-mode.
 
-<span class="linecomment">;; For further information: see docstring of `expectations'.</span>
-<span class="linecomment">;; [EVAL IT] (describe-function 'expectations)</span>
+;; For further information: see docstring of `expectations'.
+;; [EVAL IT] (describe-function 'expectations)
 
-<span class="linecomment">;;; Batch Mode:</span>
+;;; Batch Mode:
 
-<span class="linecomment">;; Batch mode can be used with this shell script (el-expectations).</span>
-<span class="linecomment">;; Of course, EMACS/OPTIONS/OUTPUT can be customized.</span>
+;; Batch mode can be used with this shell script (el-expectations).
+;; Of course, EMACS/OPTIONS/OUTPUT can be customized.
 
-<span class="linecomment">;; ATTENTION! This script is slightly changed since v1.32.</span>
+;; ATTENTION! This script is slightly changed since v1.32.
 
-<span class="linecomment">;; #!/bin/sh</span>
-<span class="linecomment">;; EMACS=emacs</span>
-<span class="linecomment">;; OPTIONS="-L . -L $HOME/emacs/lisp"</span>
-<span class="linecomment">;; OUTPUT=/tmp/.el-expectations</span>
-<span class="linecomment">;; $EMACS -q --no-site-file --batch $OPTIONS -l el-expectations -f batch-expectations $OUTPUT "$@"</span>
-<span class="linecomment">;; ret=$?</span>
-<span class="linecomment">;; cat $OUTPUT</span>
-<span class="linecomment">;; rm $OUTPUT</span>
-<span class="linecomment">;; exit $ret</span>
+;; #!/bin/sh
+;; EMACS=emacs
+;; OPTIONS="-L . -L $HOME/emacs/lisp"
+;; OUTPUT=/tmp/.el-expectations
+;; $EMACS -q --no-site-file --batch $OPTIONS -l el-expectations -f batch-expectations $OUTPUT "$@"
+;; ret=$?
+;; cat $OUTPUT
+;; rm $OUTPUT
+;; exit $ret
 
-<span class="linecomment">;; $ el-expectations el-expectations-failure-sample.el</span>
+;; $ el-expectations el-expectations-failure-sample.el
 
-<span class="linecomment">;;; Embedded test:</span>
+;;; Embedded test:
 
-<span class="linecomment">;; You can embed test using `fboundp' and `dont-compile'. dont-compile</span>
-<span class="linecomment">;; is needed to prevent unit tests from being byte-compiled.</span>
+;; You can embed test using `fboundp' and `dont-compile'. dont-compile
+;; is needed to prevent unit tests from being byte-compiled.
 
-<span class="linecomment">;; (dont-compile</span>
-<span class="linecomment">;;   (when (fboundp 'expectations)</span>
-<span class="linecomment">;;     (expectations</span>
-<span class="linecomment">;;       (expect ...)</span>
-<span class="linecomment">;;       ...</span>
-<span class="linecomment">;; )))</span>
+;; (dont-compile
+;;   (when (fboundp 'expectations)
+;;     (expectations
+;;       (expect ...)
+;;       ...
+;; )))
 
-<span class="linecomment">;;; Limitation:</span>
+;;; Limitation:
 
-<span class="linecomment">;; * `expectations-execute' can execute one test (sexp).</span>
+;; * `expectations-execute' can execute one test (sexp).
 
-<span class="linecomment">;;; Examples:</span>
+;;; Examples:
 
-<span class="linecomment">;; Example code is in the EmacsWiki.</span>
+;; Example code is in the EmacsWiki.
 
-<span class="linecomment">;; Success example http://www.emacswiki.org/cgi-bin/wiki/download/el-expectations-success-sample.el</span>
-<span class="linecomment">;; Failure example http://www.emacswiki.org/cgi-bin/wiki/download/el-expectations-failure-sample.el</span>
+;; Success example http://www.emacswiki.org/cgi-bin/wiki/download/el-expectations-success-sample.el
+;; Failure example http://www.emacswiki.org/cgi-bin/wiki/download/el-expectations-failure-sample.el
 
 
-<span class="linecomment">;;; Bug Report:</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; If you have problem, send a bug report via M-x exps-send-bug-report.</span>
-<span class="linecomment">;; The step is:</span>
-<span class="linecomment">;;  0) Setup mail in Emacs, the easiest way is:</span>
-<span class="linecomment">;;       (setq user-mail-address "your@mail.address")</span>
-<span class="linecomment">;;       (setq user-full-name "Your Full Name")</span>
-<span class="linecomment">;;       (setq smtpmail-smtp-server "your.smtp.server.jp")</span>
-<span class="linecomment">;;       (setq mail-user-agent 'message-user-agent)</span>
-<span class="linecomment">;;       (setq message-send-mail-function 'message-smtpmail-send-it)</span>
-<span class="linecomment">;;  1) Be sure to use the LATEST version of el-expectations.el.</span>
-<span class="linecomment">;;  2) Enable debugger. M-x toggle-debug-on-error or (setq debug-on-error t)</span>
-<span class="linecomment">;;  3) Use Lisp version instead of compiled one: (load "el-expectations.el")</span>
-<span class="linecomment">;;  4) Do it!</span>
-<span class="linecomment">;;  5) If you got an error, please do not close *Backtrace* buffer.</span>
-<span class="linecomment">;;  6) M-x exps-send-bug-report and M-x insert-buffer *Backtrace*</span>
-<span class="linecomment">;;  7) Describe the bug using a precise recipe.</span>
-<span class="linecomment">;;  8) Type C-c C-c to send.</span>
-<span class="linecomment">;;  # If you are a Japanese, please write in Japanese:-)</span>
+;;; Bug Report:
+;;
+;; If you have problem, send a bug report via M-x exps-send-bug-report.
+;; The step is:
+;;  0) Setup mail in Emacs, the easiest way is:
+;;       (setq user-mail-address "your@mail.address")
+;;       (setq user-full-name "Your Full Name")
+;;       (setq smtpmail-smtp-server "your.smtp.server.jp")
+;;       (setq mail-user-agent 'message-user-agent)
+;;       (setq message-send-mail-function 'message-smtpmail-send-it)
+;;  1) Be sure to use the LATEST version of el-expectations.el.
+;;  2) Enable debugger. M-x toggle-debug-on-error or (setq debug-on-error t)
+;;  3) Use Lisp version instead of compiled one: (load "el-expectations.el")
+;;  4) Do it!
+;;  5) If you got an error, please do not close *Backtrace* buffer.
+;;  6) M-x exps-send-bug-report and M-x insert-buffer *Backtrace*
+;;  7) Describe the bug using a precise recipe.
+;;  8) Type C-c C-c to send.
+;;  # If you are a Japanese, please write in Japanese:-)
 
-<span class="linecomment">;;; History:</span>
+;;; History:
 
-<span class="linecomment">;; $Log: el-expectations.el,v $</span>
-<span class="linecomment">;; Revision 1.61  2010/05/04 08:48:22  rubikitch</span>
-<span class="linecomment">;; Added bug report command</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.60  2010/04/10 22:00:51  rubikitch</span>
-<span class="linecomment">;; avoid test duplication</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.59  2010/04/05 21:50:19  rubikitch</span>
-<span class="linecomment">;; C-M-x executes unit tests only when the current defun is expectations.</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.58  2010/04/02 22:01:43  rubikitch</span>
-<span class="linecomment">;; Set default `expectations-execute-at-once' to 'all.</span>
-<span class="linecomment">;; Execute all expectations blocks by C-M-x by default.</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.57  2010/04/02 21:57:46  rubikitch</span>
-<span class="linecomment">;; `next-error' for multiple expectations block</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.56  2010/04/02 20:22:29  rubikitch</span>
-<span class="linecomment">;; `expectations-eval-defun': Execute all expectations in this file if (eq expectations-execute-at-once 'all)</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.55  2010/04/02 19:58:08  rubikitch</span>
-<span class="linecomment">;; add a newline (no code change)</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.54  2010/04/01 01:12:52  rubikitch</span>
-<span class="linecomment">;; Enter debugger when error occurs in (eq debug-on-error t)</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.53  2010/03/26 00:36:30  rubikitch</span>
-<span class="linecomment">;; no-error assertion</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.52  2010/03/26 00:23:57  rubikitch</span>
-<span class="linecomment">;; small fix</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.51  2010/03/20 21:42:54  rubikitch</span>
-<span class="linecomment">;; Apply patch by DanielHackney:</span>
-<span class="linecomment">;; Allow (error) expectation to accept an optional second argument,</span>
-<span class="linecomment">;; the symbol `*', to ignore an error message.</span>
-<span class="linecomment">;; It would be used as (error error *), and would pass for the body (error "some string").</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.50  2010/02/13 20:20:53  rubikitch</span>
-<span class="linecomment">;; font-lock support for lisp-interaction-mode</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.49  2009/10/10 09:19:40  rubikitch</span>
-<span class="linecomment">;; Fixed a displabug of `exps-display'</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.48  2008/12/22 16:44:54  rubikitch</span>
-<span class="linecomment">;; `expr-desc': replace padding with highlight face.</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.47  2008/08/28 19:28:37  rubikitch</span>
-<span class="linecomment">;; not-called assertion</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.46  2008/08/28 19:06:24  rubikitch</span>
-<span class="linecomment">;; `exps-padding': use `window-width'</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.45  2008/08/24 20:36:37  rubikitch</span>
-<span class="linecomment">;; mention `dont-compile'</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.44  2008/08/22 20:48:52  rubikitch</span>
-<span class="linecomment">;; fixed a stupid bug</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.43  2008/08/22 20:43:00  rubikitch</span>
-<span class="linecomment">;; non-nil (true) assertion</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.42  2008/04/14 07:54:27  rubikitch</span>
-<span class="linecomment">;; *** empty log message ***</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.41  2008/04/14 06:58:20  rubikitch</span>
-<span class="linecomment">;; *** empty log message ***</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.40  2008/04/14 06:52:39  rubikitch</span>
-<span class="linecomment">;; better font-lock</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.39  2008/04/13 11:49:08  rubikitch</span>
-<span class="linecomment">;; C-u M-x expectations-execute -&gt; batch-expectations-in-emacs</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.38  2008/04/13 11:39:51  rubikitch</span>
-<span class="linecomment">;; better result display.</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.37  2008/04/13 11:30:17  rubikitch</span>
-<span class="linecomment">;; expectations-eval-defun</span>
-<span class="linecomment">;; batch-expectations-in-emacs</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.36  2008/04/12 18:44:24  rubikitch</span>
-<span class="linecomment">;; extend `type' assertion to use predicates.</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.35  2008/04/12 14:10:00  rubikitch</span>
-<span class="linecomment">;; updated el-mock info.</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.34  2008/04/12 14:08:28  rubikitch</span>
-<span class="linecomment">;; * (require 'el-mock nil t)</span>
-<span class="linecomment">;; * updated `expectations' docstring</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.33  2008/04/12 09:49:27  rubikitch</span>
-<span class="linecomment">;; *** empty log message ***</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.32  2008/04/12 09:44:23  rubikitch</span>
-<span class="linecomment">;; batch-mode: handle multiple lisp files.</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.31  2008/04/12 09:34:32  rubikitch</span>
-<span class="linecomment">;; colorize result summary</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.30  2008/04/12 09:19:42  rubikitch</span>
-<span class="linecomment">;; show result summary at the top.</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.29  2008/04/12 03:19:06  rubikitch</span>
-<span class="linecomment">;; Execute all expectations in batch mode.</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.28  2008/04/12 03:07:43  rubikitch</span>
-<span class="linecomment">;; update doc.</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.27  2008/04/10 17:02:40  rubikitch</span>
-<span class="linecomment">;; *** empty log message ***</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.26  2008/04/10 14:27:47  rubikitch</span>
-<span class="linecomment">;; arranged code</span>
-<span class="linecomment">;; font-lock support</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.25  2008/04/10 12:45:57  rubikitch</span>
-<span class="linecomment">;; mock assertion</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.24  2008/04/10 08:46:19  rubikitch</span>
-<span class="linecomment">;; integration of `stub' in el-mock.el</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.23  2008/04/10 07:11:40  rubikitch</span>
-<span class="linecomment">;; error data is evaluated.</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.22  2008/04/10 06:14:12  rubikitch</span>
-<span class="linecomment">;; added finish message with current time.</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.21  2008/04/09 20:45:41  rubikitch</span>
-<span class="linecomment">;; error assertion: with error data</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.20  2008/04/09 20:02:46  rubikitch</span>
-<span class="linecomment">;; error-message assertion</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.19  2008/04/09 15:07:29  rubikitch</span>
-<span class="linecomment">;; expectations-execute-at-once, eval-defun advice</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.18  2008/04/09 08:57:37  rubikitch</span>
-<span class="linecomment">;; Batch Mode documentation</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.17  2008/04/09 08:52:34  rubikitch</span>
-<span class="linecomment">;; * (eval-when-compile (require 'cl))</span>
-<span class="linecomment">;; * avoid a warning</span>
-<span class="linecomment">;; * count expectations/failures/errors</span>
-<span class="linecomment">;; * exitstatus = failures + errors (batch mode)</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.16  2008/04/09 04:03:11  rubikitch</span>
-<span class="linecomment">;; batch-expectations: use command-line-args-left</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.15  2008/04/09 03:54:00  rubikitch</span>
-<span class="linecomment">;; refactored</span>
-<span class="linecomment">;; batch-expectations</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.14  2008/04/08 17:54:02  rubikitch</span>
-<span class="linecomment">;; fixed typo</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.13  2008/04/08 17:45:08  rubikitch</span>
-<span class="linecomment">;; documentation.</span>
-<span class="linecomment">;; renamed: expectations.el -&gt; el-expectations.el</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.12  2008/04/08 16:54:50  rubikitch</span>
-<span class="linecomment">;; changed output format slightly</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.11  2008/04/08 16:37:53  rubikitch</span>
-<span class="linecomment">;; error assertion</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.10  2008/04/08 15:52:14  rubikitch</span>
-<span class="linecomment">;; refactored</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.9  2008/04/08 15:39:06  rubikitch</span>
-<span class="linecomment">;; *** empty log message ***</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.8  2008/04/08 15:38:03  rubikitch</span>
-<span class="linecomment">;; reimplementation of exps-assert-*</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.7  2008/04/08 15:06:42  rubikitch</span>
-<span class="linecomment">;; better failure handling</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.6  2008/04/08 14:45:58  rubikitch</span>
-<span class="linecomment">;; buffer assertion</span>
-<span class="linecomment">;; regexp assertion</span>
-<span class="linecomment">;; type assertion</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.5  2008/04/08 13:16:16  rubikitch</span>
-<span class="linecomment">;; removed elk-test dependency</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.4  2008/04/08 12:55:15  rubikitch</span>
-<span class="linecomment">;; next-error/occur-like interface</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.3  2008/04/08 09:08:54  rubikitch</span>
-<span class="linecomment">;; prettier `desc' display</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.2  2008/04/08 08:45:46  rubikitch</span>
-<span class="linecomment">;; exps-last-filename</span>
-<span class="linecomment">;;</span>
-<span class="linecomment">;; Revision 1.1  2008/04/08 07:52:30  rubikitch</span>
-<span class="linecomment">;; Initial revision</span>
-<span class="linecomment">;;</span>
+;;; History:
 
-<span class="linecomment">;;; Code:</span>
+;; See http://www.rubyist.net/~rubikitch/gitlog/el-expectations.txt
+
+;;; Code:
 
 (eval-when-compile (require 'cl))
 (require 'el-mock nil t)
 
 (defgroup el-expectations nil
-  "<span class="quote">Emacs Lisp Expectations - minimalist unit testing framework.</span>"
+  "Emacs Lisp Expectations - minimalist unit testing framework."
   :group 'lisp)
 
 (defvar exps-last-testcase nil)
 (defvar exps-last-filename nil)
 (defvar exps-last-position nil)
-(defvar expectations-result-buffer "<span class="quote">*expectations result*</span>")
+(defvar expectations-result-buffer "*expectations result*")
 
 (defcustom expectations-execute-at-once 'all
-  "<span class="quote">If non-nil, execute selected expectation when pressing C-M-x.
+  "If non-nil, execute selected expectation when pressing C-M-x.
 If 'all, execute all expectations blocks in current file.
-If other non-nil value, execute current expectations block.</span>"
+If other non-nil value, execute current expectations block."
   :group 'el-expectations)
 
 (defmacro expectations (&rest body)
-  "<span class="quote">Define a expectations test case.
+  "Define a expectations test case.
 Use `expect' and `desc' to verify the code.
 Note that these are neither functions nor macros.
 These are keywords in expectations Domain Specific Language(DSL).
+
+`exps-tmpbuf' creates temporary buffers and they are killed
+after execute expectations.
 
 Synopsis:
 * (expect EXPECTED-VALUE BODY ...)
@@ -466,7 +252,7 @@ Synopsis of EXPECTED-VALUE:
     (expect (no-error)
       1)
 
-* (mock MOCK-FUNCTION-SPEC =&gt; MOCK-RETURN-VALUE)
+* (mock MOCK-FUNCTION-SPEC => MOCK-RETURN-VALUE)
   Body should call MOCK-FUNCTION-SPEC and returns MOCK-RETURN-VALUE.
   Mock assertion depends on `el-mock' library.
   If available, you do not have to require it: el-expectations detects it.
@@ -478,7 +264,7 @@ Synopsis of EXPECTED-VALUE:
     Otherwise, body should call FUNCTION with specified ARGUMENTs.
 
   Example:
-    (expect (mock (foo * 3) =&gt; nil)
+    (expect (mock (foo * 3) => nil)
       (foo 9 3))
 
 * (not-called FUNCTION)
@@ -527,52 +313,59 @@ Example:
    (expect (error)
      (/ 1 0))
    (desc \"mock with stub\")
-   (expect (mock (foo 5 * 7) =&gt; nil)
+   (expect (mock (foo 5 * 7) => nil)
      ;; Stub function `hoge', which accepts any arguments and returns 3.
-     (stub hoge =&gt; 3)
+     (stub hoge => 3)
      (foo (+ 2 (hoge 10)) 6 7))
+   (desc \"tmpbuf\")
+   (expect \"foo\"
+     (with-current-buffer (exps-tmpbuf)
+       (insert \"foo\")
+       (buffer-string)))
    )
-</span>"
+"
   (if (or noninteractive
           (eq expectations-execute-at-once 'all))
       `(setq exps-last-testcase
              ',(append exps-last-testcase
                        '((new-expectations 1))
-                      body)
+		       body)
              exps-last-filename ,(or load-file-name buffer-file-name))
-    `(setq exps-last-testcase ',body
+    ;; TODO add first label
+    `(setq exps-last-testcase ',(cons '(new-expectations 1) body)
            exps-last-filename ,(or load-file-name buffer-file-name))))
 
-(defvar exps-new-expectations-message "<span class="quote">+++++ New expectations +++++</span>")
+(defvar exps-new-expectations-message "+++++ New expectations +++++")
 
 (defun exps-execute-test (test)
   (destructuring-bind (expect expected . actual)
       test
     (case expect
       (expect
-          (if debug-on-error
-              (exps-assert expected actual)
-            (condition-case e
-                (exps-assert expected actual)
-              (error (cons 'error e)))))
+       (if debug-on-error
+	   (exps-assert expected actual)
+	 (condition-case e
+	     (exps-assert expected actual)
+	   (error (cons 'error e)))))
       (desc
        (cons 'desc expected))
       (new-expectations
-       (cons 'desc (concat exps-new-expectations-message))))))
+       (cons 'desc exps-new-expectations-message)))))
 
 
 (defvar exps-last-error-position nil)
 (defun expectations-execute (&optional testcase)
-  "<span class="quote">Execute last-defined `expectations' test.
-With prefix argument, do `batch-expectations-in-emacs'.</span>"
+  "Execute last-defined `expectations' test.
+With prefix argument, do `batch-expectations-in-emacs'."
   (interactive)
   (setq exps-last-error-position nil)
   (if current-prefix-arg
       (batch-expectations-in-emacs)
     (exps-display
-     (mapcar 'exps-execute-test (or testcase exps-last-testcase)))))
+     (mapcar 'exps-execute-test (or testcase exps-last-testcase))))
+  (exps-cleanup))
 
-<span class="linecomment">;;;; assertions</span>
+;;;; assertions
 (defvar exps-assert-functions
   '(exps-assert-non-nil
     exps-assert-true
@@ -608,24 +401,24 @@ With prefix argument, do `batch-expectations-in-emacs'.</span>"
   (exps-do-assertion
    expected actual 'non-nil t
    (lambda (e a) (not (null a)))
-   (lambda (e a) (format "<span class="quote">FAIL: Expected non-nil but was nil</span>"))))
+   (lambda (e a) (format "FAIL: Expected non-nil but was nil"))))
 
 (defun exps-assert-true (expected actual)
   (exps-do-assertion
    expected actual 'true t
    (lambda (e a) (not (null a)))
-   (lambda (e a) (format "<span class="quote">FAIL: Expected non-nil but was nil</span>"))))
+   (lambda (e a) (format "FAIL: Expected non-nil but was nil"))))
 (defun exps-assert-buffer (expected actual)
   (exps-do-assertion
    expected actual 'buffer t
    (lambda (e a) (eq (get-buffer e) a))
-   (lambda (e a) (format "<span class="quote">FAIL: Expected &lt;#&lt;buffer %s&gt;&gt; but was &lt;%S&gt;</span>" e a))))
+   (lambda (e a) (format "FAIL: Expected <#<buffer %s>> but was <%S>" e a))))
 
 (defun exps-assert-regexp (expected actual)
   (exps-do-assertion
    expected actual 'regexp t
    (lambda (e a) (string-match e a))
-   (lambda (e a) (format "<span class="quote">FAIL: %S should match /%s/</span>" a e))))
+   (lambda (e a) (format "FAIL: %S should match /%s/" a e))))
 
 (defun exps-assert-type (expected actual)
   (exps-do-assertion
@@ -633,12 +426,12 @@ With prefix argument, do `batch-expectations-in-emacs'.</span>"
    (lambda (e a) (or (eq (type-of a) e)
                      (let* ((name (symbol-name e))
                             (pred (intern
-                                   (concat name (if (string-match "<span class="quote">-</span>" name)
-                                                    "<span class="quote">-p</span>"
-                                                  "<span class="quote">p</span>")))))
-                     (when (fboundp pred)
-                       (funcall pred a)))))
-   (lambda (e a) (format "<span class="quote">FAIL: %S is not a %s</span>" a e))))
+                                   (concat name (if (string-match "-" name)
+                                                    "-p"
+                                                  "p")))))
+		       (when (fboundp pred)
+			 (funcall pred a)))))
+   (lambda (e a) (format "FAIL: %S is not a %s" a e))))
 
 (defun exps-assert-error (expected actual)
   (let (actual-error actual-errdata)
@@ -662,14 +455,14 @@ With prefix argument, do `batch-expectations-in-emacs'.</span>"
        (let ((error-type (car e))
              (actual-err-string
               (if actual-error
-                  (format "<span class="quote">, but raised &lt;%S&gt;</span>" actual-error)
-                "<span class="quote">, but no error was raised</span>")))
+                  (format ", but raised <%S>" actual-error)
+                ", but no error was raised")))
          (cond ((and error-type (eq error-type (car actual-error)))
-                (format "<span class="quote">FAIL: Expected errdata &lt;%S&gt;, but was &lt;%S&gt;</span>" actual-errdata (cdr actual-error)))
+                (format "FAIL: Expected errdata <%S>, but was <%S>" actual-errdata (cdr actual-error)))
                (error-type
-                (format "<span class="quote">FAIL: should raise &lt;%s&gt;%s</span>" error-type actual-err-string))
+                (format "FAIL: should raise <%s>%s" error-type actual-err-string))
                (t
-                (format "<span class="quote">FAIL: should raise any error%s</span>" actual-err-string)))))
+                (format "FAIL: should raise any error%s" actual-err-string)))))
      #'cdr)))
 
 (defun exps-assert-no-error (expected actual)
@@ -683,7 +476,7 @@ With prefix argument, do `batch-expectations-in-emacs'.</span>"
           (setq actual-error-string (error-message-string err))
           nil)))
      (lambda (e a)
-       (format "<span class="quote">FAIL: Expected no error, but error &lt;%s&gt; was raised</span>" actual-error-string)))))
+       (format "FAIL: Expected no error, but error <%s> was raised" actual-error-string)))))
 
 (defun exps-assert-error-message (expected actual)
   (let (actual-error-string)
@@ -697,8 +490,8 @@ With prefix argument, do `batch-expectations-in-emacs'.</span>"
           (equal e actual-error-string))))
      (lambda (e a)
        (if actual-error-string
-           (format "<span class="quote">FAIL: Expected errmsg &lt;%s&gt;, but was &lt;%s&gt;</span>" e actual-error-string)
-         (format "<span class="quote">FAIL: Expected errmsg &lt;%s&gt;, but no error was raised</span>" e))))))
+           (format "FAIL: Expected errmsg <%s>, but was <%s>" e actual-error-string)
+         (format "FAIL: Expected errmsg <%s>, but no error was raised" e))))))
 
 
 (defun exps-assert-mock (expected actual)
@@ -717,9 +510,9 @@ With prefix argument, do `batch-expectations-in-emacs'.</span>"
        (if err nil t))
      (lambda (e a)
        (if (eq 'not-called (cadr err))
-           (format "<span class="quote">FAIL: Expected function call &lt;%S&gt;</span>" e)
+           (format "FAIL: Expected function call <%S>" e)
          (destructuring-bind (_  e-args  a-args) err
-           (format "<span class="quote">FAIL: Expected call &lt;%S&gt;, but was &lt;%S&gt;</span>" e-args a-args))))
+           (format "FAIL: Expected call <%S>, but was <%S>" e-args a-args))))
      #'cdr)))
 
 (defun exps-assert-not-called (expected actual)
@@ -738,42 +531,42 @@ With prefix argument, do `batch-expectations-in-emacs'.</span>"
        (if err nil t))
      (lambda (e a)
        (if (eq 'called (cadr err))
-           (format "<span class="quote">FAIL: Expected not-called &lt;%S&gt;</span>" e)))
+           (format "FAIL: Expected not-called <%S>" e)))
      #'cdr)))
 (defun exps-assert-equal-eval (expected actual)
   (exps-do-assertion-1
    (eval expected) actual t
    (lambda (e a) (equal e a))
-   (lambda (e a) (format "<span class="quote">FAIL: Expected &lt;%S&gt; but was &lt;%S&gt;</span>" expected a))))
+   (lambda (e a) (format "FAIL: Expected <%S> but was <%S>" expected a))))
 
 (defun exps-assert (expected actual)
   (run-hook-with-args-until-success 'exps-assert-functions expected actual))
 
-<span class="linecomment">;;;; next-error interface / occur-mode-like interface</span>
-(define-derived-mode exps-display-mode fundamental-mode "<span class="quote">EXPECT</span>"
+;;;; next-error interface / occur-mode-like interface
+(define-derived-mode exps-display-mode fundamental-mode "EXPECT"
   (buffer-disable-undo)
   (setq next-error-function 'exps-next-error)
   (setq next-error-last-buffer (current-buffer))
-  (define-key exps-display-mode-map "<span class="quote">\C-m</span>" 'exps-goto-expect)
-  (define-key exps-display-mode-map "<span class="quote">\C-c\C-c</span>" 'exps-goto-expect))
+  (define-key exps-display-mode-map "\C-m" 'exps-goto-expect)
+  (define-key exps-display-mode-map "\C-c\C-c" 'exps-goto-expect))
 
 (defun exps-desc (desc)
   (propertize desc 'face 'highlight))
 
 (defface expectations-red
-  '((t (:foreground "<span class="quote">Red</span>" :bold t)))
-  "<span class="quote">Face for expectations with failure.</span>"
+  '((t (:foreground "Red" :bold t)))
+  "Face for expectations with failure."
   :group 'el-expectations)
 (defface expectations-green
-  '((t (:foreground "<span class="quote">Green</span>" :bold t)))
-  "<span class="quote">Face for successful expectations.</span>"
+  '((t (:foreground "Green" :bold t)))
+  "Face for successful expectations."
   :group 'el-expectations)
 (defvar exps-red-face 'expectations-red)
 (defvar exps-green-face 'expectations-green)
-(defun exps-result-string (s f e)
-  (let ((msg1 (format "<span class="quote">%d expectations, %d failures, %d errors\n</span>"
+(defun exps-result-string (s f e d)
+  (let ((msg1 (format "%d expectations, %d failures, %d errors\n"
                       (+ s f e) f e))
-        (msg2 (format "<span class="quote">Expectations finished at %s\n</span>"  (current-time-string))))
+        (msg2 (format "Expectations finished at %s\n"  (current-time-string))))
     (put-text-property 0 (length msg1) 'face
                        (if (zerop (+ f e))
                            exps-green-face
@@ -784,72 +577,76 @@ With prefix argument, do `batch-expectations-in-emacs'.</span>"
   (with-current-buffer (get-buffer-create expectations-result-buffer)
     (erase-buffer)
     (exps-display-mode)
-    (insert (format "<span class="quote">Executing expectations in %s...\n</span>" exps-last-filename))
-    (loop for result in results
-          for i from 1
-          do (insert
-              (format
-               "<span class="quote">%-3d:%s\n</span>" i
-               (if (consp result)
-                   (case (car result)
-                     (pass "<span class="quote">OK</span>")
-                     (fail (cdr result))
-                     (error (format "<span class="quote">ERROR: %s</span>" (cdr result)))
-                     (desc (exps-desc (cdr result)))
-                     (t "<span class="quote">not happened!</span>"))
-                 result))))
-    (insert "<span class="quote">\n</span>")
-    (loop for result in results
-          for status = (car result)
-          when (eq 'pass status) collecting result into successes
-          when (eq 'fail status) collecting result into failures
-          when (eq 'error status) collecting result into errors
-          with summary
-          finally
-          (destructuring-bind (s f e)
-              (mapcar #'length (list successes failures errors))
-            (setq summary (exps-result-string s f e))
-            (insert summary)
-            (goto-char (point-min))
-            (forward-line 1)
-            (insert summary)
-            (goto-char (point-min))
-            (return (+ f e))))
+    (insert (format "Executing expectations in %s...\n" exps-last-filename))
+    (insert "==== Failures and Errors ====\n")
+    (exps-insert-not-passes results)
+    (insert "\n"
+            "==== All Results ====\n")
+    (exps-insert-results results)
+    (insert "\n")
+    (exps-insert-counts results)
     (display-buffer (current-buffer))))
+
+(defun exps-insert-not-passes (results)
+  (destructuring-bind (pass fail error desc)
+      (exps-classify-results results)
+    (loop with xxx = (sort (append fail error) (lambda (a b) (< (car a) (car b))))
+          for (i . result) in xxx
+          do (insert (exps-insert-result i result)))))
+
+(defun exps-classify-results (results)
+  (loop for result in results
+        for i from 1
+        for status = (car result)
+        for withno = (cons i result)
+        when (eq 'pass status) collecting withno into successes
+        when (eq 'fail status) collecting withno into failures
+        when (eq 'error status) collecting withno into errors
+        when (eq 'desc status) collecting withno into descs
+        finally return (list successes failures errors descs)))
+
+(defun exps-insert-counts (results)
+  (let ((summary (exps-result-summary-string results)))
+    (insert summary)
+    (goto-char (point-min))
+    (forward-line 1)
+    (insert summary)
+    (goto-char (point-min))))
+
+(defun exps-result-summary-string (results)
+  (apply #'exps-result-string (mapcar #'length (exps-classify-results results))))
+
+(defun exps-insert-results (results)
+  (loop for result in results
+        for i from 1
+        do (insert (exps-insert-result i result))))
+
+(defun exps-insert-result (i result)
+  (format
+   "%-3d:%s\n" i
+   (if (consp result)
+       (case (car result)
+         (pass "OK")
+         (fail (cdr result))
+         (error (format "ERROR: %s" (cdr result)))
+         (desc (exps-desc (cdr result)))
+         (t "not happened!"))
+     result)))
 
 (defun exps-goto-expect ()
   (interactive)
-  <span class="linecomment">;; assumes that current-buffer is *expectations result*</span>
-  (let ((expectations-count 0)
-        (pt (point))
-        (n (exps-current-no))
-        this-new-expectations)
-    (when exps-last-filename
-      (save-excursion
-        (goto-char (point-min))
-        (while (search-forward exps-new-expectations-message pt t) <span class="linecomment">;TODO accurate message</span>
-          (incf expectations-count))
-        (setq this-new-expectations
-              (exps-current-no)))
-
-      (with-current-buffer (find-file-noselect exps-last-filename)
-        (if (eq expectations-execute-at-once 'all)
-            (goto-char (point-min))
-          (goto-char exps-last-position)
-          (beginning-of-defun))
-        (when this-new-expectations
-          (decf n this-new-expectations)
-          (dotimes (i (1- this-new-expectations))
-            (search-forward "<span class="quote">(expectations\n</span>" nil t)))
-        (pop-to-buffer (current-buffer))
-        (search-forward "<span class="quote">(expectations\n</span>" nil t)
-        (forward-sexp n)
-        (forward-sexp -1)))))
+  ;; assumes that current-buffer is *expectations result*
+  (when exps-last-filename
+    (with-current-buffer (find-file-noselect exps-last-filename)
+      (pop-to-buffer (current-buffer))
+      (goto-char (point-min))
+      (dotimes (n (exps-current-no))
+        (re-search-forward "(\\(expectations\\|desc\\|expect\\)\\_>" nil t)))))
 
 (defun exps-current-no ()
   (with-current-buffer (exps-result-buffer)
     (and (forward-line 0)
-         (looking-at "<span class="quote">^[0-9]+</span>")
+         (looking-at "^[0-9]+")
          (string-to-number (match-string 0)))))
 
 (defun exps-result-buffer ()
@@ -860,67 +657,96 @@ With prefix argument, do `batch-expectations-in-emacs'.</span>"
                               (eq major-mode 'exps-display-mode)))))
 
 (defun exps-next-error (&optional argp reset)
-  "<span class="quote">Move to the Nth (default 1) next failure/error in *expectations result* buffer.
-Compatibility function for \\[next-error] invocations.</span>"
-  (interactive "<span class="quote">p</span>")
-  <span class="linecomment">;; we need to run exps-find-failure from within the *expectations result* buffer</span>
+  "Move to the Nth (default 1) next failure/error in *expectations result* buffer.
+Compatibility function for \\[next-error] invocations."
+  (interactive "p")
+  ;; we need to run exps-find-failure from within the *expectations result* buffer
   (with-current-buffer (exps-result-buffer) 
-    <span class="linecomment">;; In case the *expectations result* buffer is visible in a nonselected window.</span>
+    ;; In case the *expectations result* buffer is visible in a nonselected window.
     (let ((win (get-buffer-window (current-buffer) t)))
       (if win (set-window-point win (point))))
     (and exps-last-error-position (goto-char exps-last-error-position))
     (goto-char (cond (reset (point-min))
-		     ((&lt; argp 0) (line-beginning-position))
-		     ((&lt; 0 argp) (line-end-position))
+		     ((< argp 0) (line-beginning-position))
+		     ((< 0 argp) (line-end-position))
 		     ((point))))
-    <span class="linecomment">;; (message (format "argp=%d reset=%S %s"argp reset (buffer-substring-no-properties (point-at-bol) (point-at-eol))))</span>
-    (exps-find-failure
-     (abs argp)
-     (if (&lt; argp 0)
-	 #'re-search-backward
-       #'re-search-forward)
-     "<span class="quote">No more failures</span>")
-    <span class="linecomment">;; (message (format "argp=%d reset=%S %s"argp reset (buffer-substring-no-properties (point-at-bol) (point-at-eol))))</span>
-    (exps-goto-expect)
-    (setq exps-last-error-position (point))))
+    ;; (message (format "argp=%d reset=%S %s"argp reset (buffer-substring-no-properties (point-at-bol) (point-at-eol))))
+    (save-restriction
+      (exps-narrow-to-failures-and-errors)
+      (exps-find-failure
+       (abs argp)
+       (if (< argp 0)
+           #'re-search-backward
+         #'re-search-forward)
+       "No more failures")
+      (exps-goto-expect)
+      (setq exps-last-error-position (point)))
+    ;; (message (format "argp=%d reset=%S %s"argp reset (buffer-substring-no-properties (point-at-bol) (point-at-eol))))
+    ))
+
+(defun exps-narrow-to-failures-and-errors ()
+  (narrow-to-region
+   (point-min)
+   (save-excursion (and (search-forward "\n==== All Results ====\n" nil t) (point)))))
 
 (defun exps-find-failure (n search-func errmsg)
   (loop repeat n do
-        (unless (funcall search-func "<span class="quote">^[0-9]+ *:\\(ERROR\\|FAIL\\)</span>" nil t)
+        (unless (funcall search-func "^[0-9]+ *:\\(ERROR\\|FAIL\\)" nil t)
           (error errmsg)))
   (point))
 
-<span class="linecomment">;;;; edit support</span>
+;;;; temporary buffer
+(declare-function exps-tmpbuf "el-expectations.el")
+(declare-function exps-cleanup-tmpbuf "el-expectations.el")
+(lexical-let ((count 1))
+  (defun exps-tmpbuf ()
+    (with-current-buffer (get-buffer-create (format " *el-expectations tmp:%d" count))
+      (prog1 (current-buffer)
+        (incf count)
+        (erase-buffer))))
+  (defun exps-cleanup-tmpbuf ()
+    (setq count 1)
+    (loop for buf in (buffer-list)
+          for bname = (buffer-name buf)
+          when (string-match " \\*el-expectations tmp:" bname)
+          do (kill-buffer buf))))
+(defun exps-cleanup ()
+  (exps-cleanup-tmpbuf))
+
+;; (exps-tmpbuf)
+;; (exps-cleanup)
+;; (find-function 'exps-tmpbuf)
+;;;; edit support
 (put 'expect 'lisp-indent-function 1)
 (put 'expectations 'lisp-indent-function 0)
 
-<span class="linecomment">;; (edit-list (quote font-lock-keywords-alist))</span>
+;; (edit-list (quote font-lock-keywords-alist))
 (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
   (font-lock-add-keywords
    mode
-   '(("<span class="quote">\\&lt;\\(expectations\\|expect\\)\\&gt;</span>" 0 font-lock-keyword-face)
+   '(("\\<\\(expectations\\|expect\\)\\>" 0 font-lock-keyword-face)
      (exps-font-lock-desc 0 font-lock-warning-face prepend)
      (exps-font-lock-expected-value 0 font-lock-function-name-face prepend))))
 
 (defun exps-font-lock-desc (limit)
-  (when (re-search-forward "<span class="quote">(desc\\s </span>" limit t)
+  (when (re-search-forward "(desc\\s " limit t)
     (backward-up-list 1)
     (set-match-data (list (point) (progn (forward-sexp 1) (point))))
     t))
 
-<span class="linecomment">;; I think expected value is so-called function name of `expect'.</span>
+;; I think expected value is so-called function name of `expect'.
 (defun exps-font-lock-expected-value (limit)
-  (when (re-search-forward "<span class="quote">(expect\\s </span>" limit t)
+  (when (re-search-forward "(expect\\s " limit t)
     (forward-sexp 1)
     (let ((e (point)))
       (forward-sexp -1)
       (set-match-data (list (point) e))
-        t)))
+      t)))
 
 (defun expectations-eval-defun (arg)
-  "<span class="quote">Do `eval-defun'.
-If `expectations-execute-at-once' is non-nil, execute expectations if it is an expectations form.</span>"
-  (interactive "<span class="quote">P</span>")
+  "Do `eval-defun'.
+If `expectations-execute-at-once' is non-nil, execute expectations if it is an expectations form."
+  (interactive "P")
   (setq exps-last-position (point))
   (eval-defun arg)
   (when (exps-current-form-is-expectations)
@@ -928,33 +754,33 @@ If `expectations-execute-at-once' is non-nil, execute expectations if it is an e
       (setq exps-last-testcase nil)
       (save-excursion
         (goto-char (point-min))
-        (while (re-search-forward "<span class="quote">^\\s-*(expectations\n</span>" nil t)
+        (while (re-search-forward "^\\s-*(expectations\n" nil t)
           (eval-defun arg))))
     (expectations-execute)))
 
 (defun exps-current-form-is-expectations ()
   (save-excursion
     (beginning-of-defun)
-    (looking-at "<span class="quote">(expectations\\|(.+(fboundp 'expectations)\\|(dont-compile\n.*expectations</span>")))
+    (looking-at "(expectations\\|(.+(fboundp 'expectations)\\|(dont-compile\n.*expectations")))
 
 (substitute-key-definition 'eval-defun 'expectations-eval-defun emacs-lisp-mode-map)
 (substitute-key-definition 'eval-defun 'expectations-eval-defun lisp-interaction-mode-map)
 
-<span class="linecomment">;;;; To avoid test duplication</span>
+;;;; To avoid test duplication
 (defadvice load (before el-expectations activate)
   (and (equal exps-last-filename (locate-library (ad-get-arg 0)))
        (setq exps-last-testcase nil)))
-<span class="linecomment">;; (progn (ad-disable-advice 'load 'before 'el-expectations) (ad-update 'load))</span>
+;; (progn (ad-disable-advice 'load 'before 'el-expectations) (ad-update 'load))
 
 (defadvice eval-buffer (before el-expectations activate)
   (and buffer-file-name
        (equal exps-last-filename buffer-file-name)
        (setq exps-last-testcase nil)))
-<span class="linecomment">;; (progn (ad-disable-advice 'eval-buffer 'before 'el-expectations) (ad-update 'eval-buffer))</span>
-<span class="linecomment">;;;; batch mode</span>
+;; (progn (ad-disable-advice 'eval-buffer 'before 'el-expectations) (ad-update 'eval-buffer))
+;;;; batch mode
 (defun batch-expectations ()
   (if (not noninteractive)
-      (error "<span class="quote">`batch-expectations' is to be used only with -batch</span>"))
+      (error "`batch-expectations' is to be used only with -batch"))
   (destructuring-bind (output-file . lispfiles)
       command-line-args-left
     (dolist (lispfile lispfiles)
@@ -965,25 +791,25 @@ If `expectations-execute-at-once' is non-nil, execute expectations if it is an e
       (kill-emacs fail-and-errors))))
 
 (defun batch-expectations-in-emacs ()
-  "<span class="quote">Execute expectations in current file with batch mode.</span>"
+  "Execute expectations in current file with batch mode."
   (interactive)
-  (shell-command (concat "<span class="quote">el-expectations </span>" exps-last-filename)
+  (shell-command (concat "el-expectations " exps-last-filename)
                  expectations-result-buffer)
   (with-current-buffer expectations-result-buffer
     (goto-char (point-min))
-    (while (re-search-forward "<span class="quote">^[0-9].+\\([0-9]\\) failures, \\([0-9]+\\) errors</span>" nil t)
+    (while (re-search-forward "^[0-9].+\\([0-9]\\) failures, \\([0-9]+\\) errors" nil t)
       (put-text-property (match-beginning 0) (match-end 0)
                          'face
-                         (if (and (string= "<span class="quote">0</span>" (match-string 1))
-                                  (string= "<span class="quote">0</span>" (match-string 2)))
+                         (if (and (string= "0" (match-string 1))
+                                  (string= "0" (match-string 2)))
                              exps-green-face
                            exps-red-face)))))
 
-<span class="linecomment">;;;; Bug report</span>
+;;;; Bug report
 (defvar exps-maintainer-mail-address
-  (concat "<span class="quote">rubiki</span>" "<span class="quote">tch@ru</span>" "<span class="quote">by-lang.org</span>"))
+  (concat "rubiki" "tch@ru" "by-lang.org"))
 (defvar exps-bug-report-salutation
-  "<span class="quote">Describe bug below, using a precise recipe.
+  "Describe bug below, using a precise recipe.
 
 When I executed M-x ...
 
@@ -993,63 +819,19 @@ How to send a bug report:
   3) Use Lisp version instead of compiled one: (load \"el-expectations.el\")
   4) If you got an error, please paste *Backtrace* buffer.
   5) Type C-c C-c to send.
-# If you are a Japanese, please write in Japanese:-)</span>")
+# If you are a Japanese, please write in Japanese:-)")
 (defun exps-send-bug-report ()
   (interactive)
   (reporter-submit-bug-report
    exps-maintainer-mail-address
-   "<span class="quote">el-expectations.el</span>"
-   (apropos-internal "<span class="quote">^exps-</span>" 'boundp)
+   "el-expectations.el"
+   (apropos-internal "^exps-" 'boundp)
    nil nil
    exps-bug-report-salutation))
 
 
 (provide 'el-expectations)
 
-<span class="linecomment">;; How to save (DO NOT REMOVE!!)</span>
-<span class="linecomment">;; (emacswiki-post "el-expectations.el")</span>
-<span class="linecomment">;;; el-expectations.el ends here</span></span></pre></div><div class="wrapper close"></div></div><div class="footer"><hr /><span class="gotobar bar"><a class="local" href="http://www.emacswiki.org/emacs/SiteMap">SiteMap</a> <a class="local" href="http://www.emacswiki.org/emacs/Search">Search</a> <a class="local" href="http://www.emacswiki.org/emacs/ElispArea">ElispArea</a> <a class="local" href="http://www.emacswiki.org/emacs/HowTo">HowTo</a> <a class="local" href="http://www.emacswiki.org/emacs/RecentChanges">RecentChanges</a> <a class="local" href="http://www.emacswiki.org/emacs/News">News</a> <a class="local" href="http://www.emacswiki.org/emacs/Problems">Problems</a> <a class="local" href="http://www.emacswiki.org/emacs/Suggestions">Suggestions</a> </span><span class="translation bar"><br />  <a class="translation new" rel="nofollow" href="http://www.emacswiki.org/emacs?action=translate;id=el-expectations.el;missing=de_es_fr_it_ja_ko_pt_ru_se_zh">Add Translation</a></span><span class="edit bar"><br /> <a class="edit" accesskey="e" title="Click to edit this page" rel="nofollow" href="http://www.emacswiki.org/emacs?action=edit;id=el-expectations.el">Edit this page</a> <a class="history" rel="nofollow" href="http://www.emacswiki.org/emacs?action=history;id=el-expectations.el">View other revisions</a> <a class="admin" rel="nofollow" href="http://www.emacswiki.org/emacs?action=admin;id=el-expectations.el">Administration</a></span><span class="time"><br /> Last edited 2010-05-04 08:48 UTC by <a class="author" title="from 124-144-92-34.rev.home.ne.jp" href="http://www.emacswiki.org/emacs/rubikitch">rubikitch</a> <a class="diff" rel="nofollow" href="http://www.emacswiki.org/emacs?action=browse;diff=2;id=el-expectations.el">(diff)</a></span><div style="float:right; margin-left:1ex;">
-<!-- Creative Commons License -->
-<a href="http://creativecommons.org/licenses/GPL/2.0/"><img alt="CC-GNU GPL" style="border:none" src="/pics/cc-GPL-a.png" /></a>
-<!-- /Creative Commons License -->
-</div>
-
-<!--
-<rdf:RDF xmlns="http://web.resource.org/cc/"
- xmlns:dc="http://purl.org/dc/elements/1.1/"
- xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-<Work rdf:about="">
-   <license rdf:resource="http://creativecommons.org/licenses/GPL/2.0/" />
-  <dc:type rdf:resource="http://purl.org/dc/dcmitype/Software" />
-</Work>
-
-<License rdf:about="http://creativecommons.org/licenses/GPL/2.0/">
-   <permits rdf:resource="http://web.resource.org/cc/Reproduction" />
-   <permits rdf:resource="http://web.resource.org/cc/Distribution" />
-   <requires rdf:resource="http://web.resource.org/cc/Notice" />
-   <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
-   <requires rdf:resource="http://web.resource.org/cc/ShareAlike" />
-   <requires rdf:resource="http://web.resource.org/cc/SourceCode" />
-</License>
-</rdf:RDF>
--->
-
-<p class="legal">
-This work is licensed to you under version 2 of the
-<a href="http://www.gnu.org/">GNU</a> <a href="/GPL">General Public License</a>.
-Alternatively, you may choose to receive this work under any other
-license that grants the right to use, copy, modify, and/or distribute
-the work, as long as that license imposes the restriction that
-derivative works have to grant the same rights and impose the same
-restriction. For example, you may choose to receive this work under
-the
-<a href="http://www.gnu.org/">GNU</a>
-<a href="/FDL">Free Documentation License</a>, the
-<a href="http://creativecommons.org/">CreativeCommons</a>
-<a href="http://creativecommons.org/licenses/sa/1.0/">ShareAlike</a>
-License, the XEmacs manual license, or
-<a href="/OLD">similar licenses</a>.
-</p>
-</div>
-</body>
-</html>
+;; How to save (DO NOT REMOVE!!)
+;; (progn (git-log-upload) (emacswiki-post "el-expectations.el"))
+;;; el-expectations.el ends here

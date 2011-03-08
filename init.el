@@ -2,10 +2,6 @@
 (setq debug-on-error t)
 
 ;;; add to the load path
-;; (add-to-list 'load-path (expand-file-name "~/elisp"))
-;; (add-to-list 'load-path (expand-file-name "~/elisp/snippets"))
-;; (add-to-list 'load-path (expand-file-name "~/elisp/icicles"))
-;; (add-to-list 'load-path (expand-file-name "~/elisp/cucumber.el"))
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
     (let* ((my-lisp-dir "~/.emacs.d/")
 	   (default-directory my-lisp-dir))
@@ -39,18 +35,22 @@
 (global-set-key (kbd "C-M-<down>") 'duplicate-line-down)
 (global-set-key (kbd "M-<up>") 'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
+(global-set-key (kbd "C-+") 'increment-number-at-point)
+(global-set-key (kbd "C--") 'decrement-number-at-point)
 
 ;;; global settings
 (setq inhibit-startup-message t)
 (global-font-lock-mode t)
-(show-paren-mode t)
+(show-paren-mode 1)
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq font-lock-maximum-decoration t)
 (setq save-abbrevs t)
 (delete-selection-mode 1)
 (column-number-mode 1)
 
-(pymacs-load "pymdev" "pymdev-")
+(require 'misc_functions)
+
+;(pymacs-load "pymdev" "pymdev-")
 
 (require 'filesets+)
 (filesets-init) ; Enable filesets
@@ -124,6 +124,7 @@
 (load custom-file)
 
 
+(require 'nginx-mode)
 
 ;;; actionscript
 (require 'actionscript-mode)
@@ -155,70 +156,6 @@
 ;; Yegge's js mode
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
-;;;
-;;; custom methods
-;;;
-
-;   move the current line by n lines
-(defun move-line (n)
-   "Move the current line up or down by N lines."
-   (interactive "p")
-   (let ((col (current-column))
-         start
-         end)
-     (beginning-of-line)
-     (setq start (point))
-     (end-of-line)
-     (forward-char)
-     (setq end (point))
-     (let ((line-text (delete-and-extract-region start end)))
-       (forward-line n)
-       (insert line-text)
-       ;; restore point to original column in moved line
-       (forward-line -1)
-       (forward-char col))))
-
-(defun move-line-up (n)
-   "Move the current line up by N lines."
-   (interactive "p")
-   (move-line (if (null n) -1 (- n))))
-
-(defun move-line-down (n)
-   "Move the current line down by N lines."
-   (interactive "p")
-   (move-line (if (null n) 1 n)))
-
-;   copy the current line
-(defun duplicate-line (n)
-   "Copy the current line up or down by N lines."
-   (interactive "p")
-   (let ((col (current-column))
-         start
-         end)
-     (beginning-of-line)
-     (setq start (point))
-     (end-of-line)
-     (forward-char)
-     (setq end (point))
-     (let ((line-text (delete-and-extract-region start end)))
-       (insert line-text)
-       (forward-line -1)
-       (insert line-text)
-       (if (equal -1 n)
-           (forward-line -1))
-       (forward-char col)
-       )))
-
-(defun duplicate-line-up (n)
-   "Copy the current line up by a line."
-   (interactive "p")
-   (duplicate-line (if (null n) -1 (- n))))
-
-(defun duplicate-line-down (n)
-   "Copy the current line down by a line."
-   (interactive "p")
-   (duplicate-line (if (null n) 0 n)))
 
 ;;; Taken from http://www.emacswiki.org/emacs/AutoIndentation#SmartPaste
 
