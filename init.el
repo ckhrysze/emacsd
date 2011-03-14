@@ -37,6 +37,7 @@
 (global-set-key (kbd "M-<down>") 'move-line-down)
 (global-set-key (kbd "C-+") 'increment-number-at-point)
 (global-set-key (kbd "C--") 'decrement-number-at-point)
+(global-set-key (kbd "C-.") 'find-next-tag)
 
 ;;; global settings
 (setq inhibit-startup-message t)
@@ -133,6 +134,8 @@
 (load "~/.emacs.d/nxhtml/autostart.el")
 
 ;;; For rails development
+(require 'ruby-electric)
+(add-hook 'ruby-mode-hook (lambda () (ruby-electric-mode t)))
 (require 'rails-autoload)
 (require 'haml-mode)
 

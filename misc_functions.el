@@ -1,3 +1,18 @@
+;; http://www.emacswiki.org/emacs/InteractivelyDoThings
+(defun ido-find-file-in-tag-files ()
+  (interactive)
+  (save-excursion
+    (let ((enable-recursive-minibuffers t))
+      (visit-tags-table-buffer))
+    (find-file
+     (expand-file-name
+      (ido-completing-read
+       "Project file: " (tags-table-files) nil t)))))
+
+(defun find-next-tag ()
+  (interactive)
+  (find-tag "" t))
+
 (defun increment-number-at-point ()
   (interactive)
   (skip-chars-backward "0123456789")
