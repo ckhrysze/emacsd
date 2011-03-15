@@ -51,6 +51,8 @@
 
 (require 'misc_functions)
 
+(require 'autopair)
+(autopair-global-mode) ;; enable autopair in all buffers 
 ;(pymacs-load "pymdev" "pymdev-")
 
 (require 'filesets+)
@@ -134,8 +136,8 @@
 (load "~/.emacs.d/nxhtml/autostart.el")
 
 ;;; For rails development
-(require 'ruby-electric)
-(add-hook 'ruby-mode-hook (lambda () (ruby-electric-mode t)))
+;; (require 'ruby-electric)
+;; (add-hook 'ruby-mode-hook (lambda () (ruby-electric-mode t)))
 (require 'rails-autoload)
 (require 'haml-mode)
 
