@@ -16,13 +16,14 @@
 (global-set-key [f1] 'goto-line)
 (global-set-key [f4] 'call-last-kbd-macro)
 (global-set-key [f5] 'revert-buffer)
+(global-set-key [f8] 'ido-find-file-in-tag-files)
 (global-set-key [f9] 'ecb-goto-window-directories)
 (global-set-key [f10] 'ecb-goto-window-sources)
 (global-set-key [f11] 'ecb-goto-window-methods)
 (global-set-key [f12] 'ecb-goto-window-edit1)
 (global-set-key "\C-z" 'undo)
-(global-set-key (kbd "C-<slash>") 'comment-or-uncomment-region)
-(global-set-key "\C-c\C-c" 'comment-or-uncomment-region)
+(global-set-key [(ctrl /)] 'comment-or-uncomment-region)
+(global-set-key "\C-c\C-c" 'keyboard-escape-quit)
 (global-set-key "\C-w" 'clipboard-kill-region)
 (global-set-key "\M-w" 'clipboard-kill-ring-save)
 (global-set-key "\C-y" 'clipboard-yank)
@@ -52,7 +53,11 @@
 (require 'misc_functions)
 
 (require 'autopair)
-(autopair-global-mode) ;; enable autopair in all buffers 
+;; (autopair-global-mode) ;; enable autopair in all buffers
+(add-hook 'ruby-mode-hook (lambda () (autopair-mode t)))
+(require 'ruby-electric)
+(add-hook 'ruby-mode-hook (lambda () (ruby-electric-mode t)))
+
 ;(pymacs-load "pymdev" "pymdev-")
 
 (require 'filesets+)
@@ -136,8 +141,6 @@
 (load "~/.emacs.d/nxhtml/autostart.el")
 
 ;;; For rails development
-;; (require 'ruby-electric)
-;; (add-hook 'ruby-mode-hook (lambda () (ruby-electric-mode t)))
 (require 'rails-autoload)
 (require 'haml-mode)
 

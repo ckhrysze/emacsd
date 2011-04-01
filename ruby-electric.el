@@ -116,14 +116,17 @@ strings. Note that you must have Font Lock enabled."
   ruby-mode-map
   (ruby-electric-setup-keymap))
 
+;; I still want my 'end' completions, but I'm letting autopair do the rest
+;; I should really just merge them into my own happy ruby and everything else
+;; auto insert pairing thing...but the time for that is not now
+;; (define-key ruby-mode-map "{" 'ruby-electric-curlies)
+;; (define-key ruby-mode-map "(" 'ruby-electric-matching-char)
+;; (define-key ruby-mode-map "[" 'ruby-electric-matching-char)
+;; (define-key ruby-mode-map "\"" 'ruby-electric-matching-char)
+;; (define-key ruby-mode-map "\'" 'ruby-electric-matching-char)
+;; (define-key ruby-mode-map "|" 'ruby-electric-bar)
 (defun ruby-electric-setup-keymap()
-  (define-key ruby-mode-map " " 'ruby-electric-space)
-  (define-key ruby-mode-map "{" 'ruby-electric-curlies)
-  (define-key ruby-mode-map "(" 'ruby-electric-matching-char)
-  (define-key ruby-mode-map "[" 'ruby-electric-matching-char)
-  (define-key ruby-mode-map "\"" 'ruby-electric-matching-char)
-  (define-key ruby-mode-map "\'" 'ruby-electric-matching-char)
-  (define-key ruby-mode-map "|" 'ruby-electric-bar))
+  (define-key ruby-mode-map " " 'ruby-electric-space))
 
 (defun ruby-electric-insert-end () 
   "Insert \"end\" at point and reindent current line." 
