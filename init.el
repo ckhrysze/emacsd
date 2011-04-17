@@ -157,12 +157,22 @@
 (require 'sass-mode)
 (add-to-list 'auto-mode-alist '("\\.sass$" . sass-mode))
 
+;; coffee script mode, by defunkt
+(require 'coffee-mode)
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+(defun coffee-custom ()
+  "coffee-mode-hook"
+  (set (make-local-variable 'tab-width) 2))
+
+(add-hook 'coffee-mode-hook
+	  '(lambda() (coffee-custom)))
 
 
 (autoload 'javascript-mode "javascript" nil t)
 
-;; Yegge's js mode
-(autoload 'js2-mode "js2" nil t)
+;; Someones modified version of Yegge's js mode
+(autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;;; Taken from http://www.emacswiki.org/emacs/AutoIndentation#SmartPaste
