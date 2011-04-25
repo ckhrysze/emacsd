@@ -50,6 +50,9 @@
 (delete-selection-mode 1)
 (column-number-mode 1)
 
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
 (require 'misc_functions)
 
 (require 'autopair)
