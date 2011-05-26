@@ -16,20 +16,16 @@
 (global-set-key [f1] 'goto-line)
 (global-set-key [f4] 'call-last-kbd-macro)
 (global-set-key [f5] 'revert-buffer)
-(global-set-key [f8] 'ido-find-file-in-tag-files)
-(global-set-key [f9] 'ecb-goto-window-directories)
-(global-set-key [f10] 'ecb-goto-window-sources)
-(global-set-key [f11] 'ecb-goto-window-methods)
-(global-set-key [f12] 'ecb-goto-window-edit1)
 (global-set-key "\C-z" 'undo)
 (global-set-key [(ctrl /)] 'comment-or-uncomment-region)
 (global-set-key "\C-c\C-c" 'keyboard-escape-quit)
+(global-set-key "\C-c\C-f" 'ido-find-file-in-tag-files)
 (global-set-key "\C-w" 'clipboard-kill-region)
 (global-set-key "\M-w" 'clipboard-kill-ring-save)
 (global-set-key "\C-y" 'clipboard-yank)
 (global-set-key "\C-v" 'clipboard-yank)
-(global-set-key (kbd "C-;") 'rails/goto)
-(global-set-key "\C-t" 'rails/resources/toggle-test)
+; (global-set-key (kbd "C-;") 'rails/goto)
+; (global-set-key "\C-t" 'rails/resources/toggle-test)
 
 ;;; bindings to custom functions
 (global-set-key (kbd "C-M-<up>") 'duplicate-line-up)
@@ -43,11 +39,11 @@
 ;;; global settings
 (setq inhibit-startup-message t)
 (global-font-lock-mode t)
-(show-paren-mode 1)
+(show-paren-mode t)
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq font-lock-maximum-decoration t)
 (setq save-abbrevs t)
-(delete-selection-mode 1)
+;(delete-selection-mode 1)
 (column-number-mode 1)
 
 (put 'upcase-region 'disabled nil)
@@ -118,6 +114,7 @@
 (add-to-list 'auto-mode-alist '("\\.erb$" . nxml-mode))
 
 ;These lines are required for ECB
+(global-ede-mode 1)
 (setq semantic-load-turn-everything-on t)
 (require 'semantic-load)
 
@@ -144,17 +141,19 @@
 (load "~/.emacs.d/nxhtml/autostart.el")
 
 ;;; For rails development
-(require 'rails-autoload)
-(require 'haml-mode)
+; (require 'rails-autoload)
+; (require 'haml-mode)
 
-;; (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
-;; (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
-;; (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
-;; (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.task$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 
-;; yaml mode from http://tweedle-dee.org/svn/emacs.d/site-lisp/yaml-mode.el
+;; https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 
 ;; sass-mode
 (require 'sass-mode)

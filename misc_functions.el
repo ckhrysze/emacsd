@@ -29,6 +29,14 @@
 ;; 	  '(lambda () (jds-set-tags-file-path)))
 
 
+(setq path-to-ctags "/usr/local/Cellar/ctags/5.8/bin/ctags") ;; <- your ctags path here
+(defun create-tags (dir-name)
+  "Create tags file."
+  (interactive "DDirectory: ")
+  (shell-command
+   (format "%s -f %s/TAGS -e -R %s" path-to-ctags dir-name (directory-file-name dir-name)))
+  )
+
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
 (defun ido-find-file-in-tag-files ()
   (interactive)
