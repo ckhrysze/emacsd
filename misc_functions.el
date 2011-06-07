@@ -1,3 +1,21 @@
+;; Not sure how it is that I grabbed this from the source, but
+;; didn't already have it...
+;; http://repo.or.cz/w/emacs.git/blob/HEAD:/lisp/misc.el
+(defun zap-up-to-char (arg char)
+  "Kill up to, but not including ARGth occurrence of CHAR.
+ Case is ignored if `case-fold-search' is non-nil in the current buffer.
+ Goes backward if ARG is negative; error if CHAR not found.
+ Ignores CHAR at point."
+  (interactive "p\ncZap up to char: ")
+  (let ((direction (if (>= arg 0) 1 -1)))
+    (kill-region (point)
+		 (progn
+		   (forward-char direction)
+		   (unwind-protect
+		       (search-forward (char-to-string char) nil nil arg)
+		     (backward-char direction))
+		   (point)))))
+
 ;; (defun jds-find-tags-file ()
 ;;   "recursively searches each parent directory for a file named 'TAGS' and returns the
 ;; path to that file or nil if a tags file is not found. Returns nil if the buffer is
@@ -27,7 +45,6 @@
 ;; ;; delay search the TAGS file after open the source file
 ;; (add-hook 'emacs-startup-hook 
 ;; 	  '(lambda () (jds-set-tags-file-path)))
-
 
 (setq path-to-ctags "/usr/local/Cellar/ctags/5.8/bin/ctags") ;; <- your ctags path here
 (defun create-tags (dir-name)

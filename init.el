@@ -1,5 +1,6 @@
 ;;; if something goes wrong, I want to know about it
 (setq debug-on-error t)
+(setq stack-trace-on-error 1)
 
 ;;; add to the load path
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
@@ -11,6 +12,9 @@
 ;;; don't really need a tool bar
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (scroll-bar-mode -1)
+
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/") 
+			 ("gnu" . "http://elpa.gnu.org/packages/")))
 
 ;;; global key settings
 (global-set-key [f1] 'goto-line)
@@ -26,6 +30,8 @@
 (global-set-key "\C-v" 'clipboard-yank)
 ; (global-set-key (kbd "C-;") 'rails/goto)
 ; (global-set-key "\C-t" 'rails/resources/toggle-test)
+(global-set-key (kbd "C-t") 'ruby-test-toggle-implementation-and-specification)
+(global-set-key "\M-z" 'zap-up-to-char)
 
 ;;; bindings to custom functions
 (global-set-key (kbd "C-M-<up>") 'duplicate-line-up)
@@ -49,6 +55,15 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+(add-to-list 'load-path "/usr/local/bin/ack")
+(autoload 'ack-same "full-ack" nil t)
+(autoload 'ack "full-ack" nil t)
+(autoload 'ack-find-same-file "full-ack" nil t)
+(autoload 'ack-find-file "full-ack" nil t)
+
+(setq mac-command-modifier 'meta)
+
+
 (require 'misc_functions)
 
 (require 'autopair)
@@ -59,9 +74,6 @@
 
 ;(pymacs-load "pymdev" "pymdev-")
 
-(require 'filesets+)
-(filesets-init) ; Enable filesets
-
 (autoload 'mode-compile "mode-compile"
   "Command to compile current buffer file based on the major mode" t)
 (global-set-key "\C-cc" 'mode-compile)
@@ -71,7 +83,8 @@
 
 
 ;; more typical line numbers
-(global-linum-mode 1)
+(line-number-mode 1)
+;; (global-linum-mode 1)
 
 (eval-after-load "icomplete" '(progn (require 'icomplete+)))
 
@@ -85,11 +98,11 @@
 
 (require 'smooth-scrolling)
 
-(require 'bar-cursor)
-(bar-cursor-mode 1)
+;; (require 'bar-cursor)
+;; (bar-cursor-mode 1)
 
-(require 'feature-mode)
-(add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
+;; (require 'feature-mode)
+;; (add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
 
 (require 'compile)
 ;; (require 'rspec-mode)
@@ -99,7 +112,6 @@
 (set-face-background 'modeline          "#ccccff")
 (set-face-background 'modeline-inactive "#cccccc")
 (set-face-background 'fringe "#fcfcfc")
-
 
 
 ;;; as per http://www.emacswiki.org/emacs/SmoothScrolling try to make mouse scrolling sane
@@ -114,9 +126,8 @@
 (add-to-list 'auto-mode-alist '("\\.erb$" . nxml-mode))
 
 ;These lines are required for ECB
-(global-ede-mode 1)
-(setq semantic-load-turn-everything-on t)
-(require 'semantic-load)
+;; (setq semantic-load-turn-everything-on t)
+;; (require 'semantic-load)
 
 ;;; Backup files in one spot
 (setq backup-directory-alist nil)
@@ -126,19 +137,55 @@
 
 
 ; This installs ecb - it is activated with M-x ecb-activate
-(require 'ecb-autoloads)
+(require 'semantic/analyze)
+(provide 'semantic-analyze)
+(provide 'semantic-ctxt)
+(provide 'semanticdb)
+(provide 'semanticdb-find)
+(provide 'semanticdb-mode)
+(provide 'semantic-load)
+
+(require 'ecb)
+;; 
+;; (require 'ecb-autoloads)
+;; (add-hook 'ecb-before-activate-hook
+;; 	  (function
+;; 	   (lambda ()
+;; 	     (global-ede-mode 1)
+;; 	     ;; Enable semantic. Causes the "Development" main menu to 
+;; 	     be added.
+;; 	     (semantic-mode 1)
+;; 	     ;; If enabled, semantic inserts lines in the code buffer 
+;; 	     above the tags
+;; 	     ;; it is tracking, and highlights things like #includes 
+;; 	     (dflt=nil)
+;; 	     (global-semantic-decoration-mode 1)
+;; 	     ;; dflt=nil
+;; 	     (global-semantic-highlight-func-mode 1)
+;; 	     ;; dflt=nil
+;; 	     (global-semantic-idle-completions-mode 1)
+;; 	     ;; dflt=nil
+;; 	     (global-semantic-idle-tag-highlight-mode 1)
+;; 	     ;; dflt=nil
+;; 	     (global-semantic-show-parser-state-mode 1)
+;; 	     ;; dflt=nil
+;; 	     (global-semantic-show-unmatched-syntax-mode 1)
+;; 	     (setq ecb-bucket-node-display '("[" "]" ecb-bucket-node-face))
+;; 	     ))
+;; 	  )
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
 
 (require 'nginx-mode)
+(require 'ruby-test)
 
 ;;; actionscript
-(require 'actionscript-mode)
-(add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
+;; (require 'actionscript-mode)
+;; (add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
 
-(load "~/.emacs.d/nxhtml/autostart.el")
+;; (load "~/.emacs.d/nxhtml/autostart.el")
 
 ;;; For rails development
 ; (require 'rails-autoload)
@@ -214,12 +261,9 @@
      (list (line-beginning-position)
 	   (line-beginning-position 2)))))
 
-;(require 'icicles)
-;(icy-mode 1)
-
 ;;; Notes
 ; auto increment magic (thank yegge!)
 ; M-x replace-regexp
 ;   Replace regexp: \(.+:\)
 ;   Replace regexp with \#.
-;
+
