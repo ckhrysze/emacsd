@@ -55,7 +55,7 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-(add-to-list 'load-path "/usr/local/bin/ack")
+(setq exec-path (append exec-path '("/usr/local/bin")))
 (autoload 'ack-same "full-ack" nil t)
 (autoload 'ack "full-ack" nil t)
 (autoload 'ack-find-same-file "full-ack" nil t)

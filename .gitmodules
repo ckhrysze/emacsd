@@ -1,6 +1,6 @@
-[submodule "cucumber"]
-	path = cucumber
-	url = git://github.com/michaelklishin/cucumber.el
 [submodule "vendor/coffee-script"]
 	path = vendor/coffee-script
 	url = https://github.com/defunkt/coffee-mode.git
+[submodule "vendor/emacs_color_theme_solarized"]
+	path = vendor/emacs_color_theme_solarized
+	url = https://github.com/sellout/emacs-color-theme-solarized.git
