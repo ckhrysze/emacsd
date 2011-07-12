@@ -72,6 +72,15 @@
 (require 'ruby-electric)
 (add-hook 'ruby-mode-hook (lambda () (ruby-electric-mode t)))
 
+
+;; rinari
+;; (require 'rinari)
+
+(load "~/.emacs.d/nxhtml/autostart.el")
+
+;; (add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo)
+
+
 ;(pymacs-load "pymdev" "pymdev-")
 
 (autoload 'mode-compile "mode-compile"
@@ -185,7 +194,7 @@
 ;; (require 'actionscript-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
 
-;; (load "~/.emacs.d/nxhtml/autostart.el")
+
 
 ;;; For rails development
 ; (require 'rails-autoload)
