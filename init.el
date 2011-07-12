@@ -78,8 +78,7 @@
 
 (load "~/.emacs.d/nxhtml/autostart.el")
 
-;; (add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo)
-
+(add-to-list 'auto-mode-alist '("\\.html\\.erb$" . eruby-nxhtml-mumamo-mode))
 
 ;(pymacs-load "pymdev" "pymdev-")
 
@@ -132,7 +131,6 @@
 
 ; for xml files, use nxml-mode instead of sgml-mode
 (add-to-list 'auto-mode-alist '("\\.xml$" . nxml-mode))
-(add-to-list 'auto-mode-alist '("\\.erb$" . nxml-mode))
 
 ;These lines are required for ECB
 ;; (setq semantic-load-turn-everything-on t)
