@@ -82,7 +82,7 @@
   :group 'ruby-test)
 
 (defcustom implementation-filename-mapping
-  '(("\\(.*\\)spec/\\(.*\\)_spec\\.rb$" "\\1lib/\\2.rb")
+  '(("\\(.*\\)/spec/\\(.*\\)_spec\\.rb$" "\\1/lib/\\2.rb")
     )
   "Regular expressions to map Ruby implementation to unit
 filenames). The first element in each list is the match, the
@@ -91,7 +91,7 @@ second the replace expression."
   :group 'ruby-test)
 
 (defcustom specification-filename-mapping
-  '(("\\(.*\\)lib/\\(.*\\)\\.rb\$" "\\1spec/\\2_spec.rb")
+  '(("\\(.*\\)/lib/\\(.*\\)\\.rb\$" "\\1/spec/\\2_spec.rb")
     )
   "Regular expressions to map Ruby specification to
 implementation filenames). The first element in each list is the

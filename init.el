@@ -16,6 +16,10 @@
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/") 
 			 ("gnu" . "http://elpa.gnu.org/packages/")))
 
+(require 'solarized-definitions)
+(create-solarized-theme light)
+
+
 ;;; global key settings
 (global-set-key [f1] 'goto-line)
 (global-set-key [f4] 'call-last-kbd-macro)
@@ -72,6 +76,9 @@
 (require 'ruby-electric)
 (add-hook 'ruby-mode-hook (lambda () (ruby-electric-mode t)))
 
+(setq ruby-deep-indent-paren nil)
+(setq ruby-deep-indent-paren-style nil)
+(setq ruby-deep-arglist nil)
 
 ;; rinari
 ;; (require 'rinari)
@@ -203,6 +210,7 @@
 (add-to-list 'auto-mode-alist '("\\.task$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 
 ;; https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
 (require 'yaml-mode)
@@ -274,3 +282,4 @@
 ;   Replace regexp: \(.+:\)
 ;   Replace regexp with \#.
 
+(setq ruby-insert-encoding-magic-comment nil)

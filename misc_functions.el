@@ -54,6 +54,57 @@
    (format "%s -f %s/TAGS -e -R %s" path-to-ctags dir-name (directory-file-name dir-name)))
   )
 
+
+;; http://codereview.stackexchange.com/q/45/5601
+(defun ckhrysze-find-parent-tags (dir)
+  "Traverses the directory tree up to /home/[user]/ or / whichever comes first. 
+   Returns either nil or the directory containing the first TAGS file it finds."
+  (interactive (list default-directory))
+  (ckhrysze-find-parent-tags-rec (ckhrysze-build-tag-paths dir)))
+(defun ckhrysze-find-parent-tags-rec (list-of-filepath)
+  (cond ((null list-of-filepath) nil)
+        ((file-exists-p (car list-of-filepath)) (car list-of-filepath))
+        (t (ckhrysze-find-parent-tags-rec (cdr list-of-filepath)))))
+(defun ckhrysze-build-tag-paths (dir-string)
+  (ckhrysze-build-tag-paths-rec (remove-if #'ckhrysze-empty-string? (split-string dir-string "/")) (list "/")))
+(defun ckhrysze-build-tag-paths-rec (steps acc)
+  (if (null steps) 
+      (mapcar (lambda (p) (concat p "TAGS")) acc)
+    (ckhrysze-build-tag-paths-rec (cdr steps)
+			 (cons (concat (car acc) (car steps) "/") acc))))
+
+(defun ckhrysze-empty-string? (s) (equalp s ""))
+
+
+
+;; http://emacs-journey.blogspot.com/2009/08/lets-tag-and-load.html
+;; (setq tags-directory "/path/to/tags/")
+;; (setq tag-list 
+;;       (list
+;;        (cons '"/path/to/project1" (concat tags-directory "tags1"))
+;;        (cons '"/path/to/project2" (concat tags-directory "tags2"))))
+;; 
+;; (defun load-tags ()
+;;   (interactive)
+;;   (if (buffer-file-name)
+;;       (progn
+;;         (dolist (tag-cons tag-list)
+;;           (if (string-match (regexp-quote (car tag-cons)) (buffer-file-name))
+;;               (progn
+;;                 (if (not (equal tags-file-name (cdr tag-cons)))
+;; 		    (progn
+;; 		      (message (concat "loading tags" (cdr tag-cons)))
+;; 		      (setq tags-file-name nil)
+;; 		      (setq tags-table-list nil)
+;; 		      (visit-tags-table (cdr tag-cons))))))))))
+;; 
+;; (defun switch-to-buffer-and-load-tags ()
+;;   (interactive)
+;;   (ido-switch-buffer)
+;;   (load-tags))
+;; 
+;; (add-hook 'find-file-hook 'load-tags)
+
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
 (defun ido-find-file-in-tag-files ()
   (interactive)
