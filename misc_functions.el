@@ -1,3 +1,31 @@
+;; A cool gist followed by some help from stackoverflow
+;; https://gist.github.com/1683375
+;; http://stackoverflow.com/questions/9184243/how-do-i-list-non-ecb-windows-in-emacs
+(defun non-ecb-window-list ()
+  (remove-if
+   #'(lambda (window)
+       (find (window-buffer window) (ecb-dedicated-special-buffers)))
+   (window-list)))
+(defun count-non-ecb-windows ()
+  (length (non-ecb-window-list)))
+(defun swap-windows ()
+  "If you have 2 windows, it swaps them."
+  (interactive)
+  (cond ((not (= (count-non-ecb-windows) 2))
+	 (message "You need exactly 2 windows to do this."))
+	(t
+	 (let* ((w1 (first (non-ecb-window-list)))
+		(w2 (second (non-ecb-window-list)))
+		(b1 (window-buffer w1))
+		(b2 (window-buffer w2))
+		(s1 (window-start w1))
+		(s2 (window-start w2)))
+	   (set-window-buffer w1 b2)
+	   (set-window-buffer w2 b1)
+	   (set-window-start w1 s2)
+	   (set-window-start w2 s1)))))
+
+
 ;; Not sure how it is that I grabbed this from the source, but
 ;; didn't already have it...
 ;; http://repo.or.cz/w/emacs.git/blob/HEAD:/lisp/misc.el

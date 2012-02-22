@@ -22,6 +22,7 @@
 
 ;;; global key settings
 (global-set-key [f1] 'goto-line)
+(global-set-key [f2] 'server-edit)
 (global-set-key [f4] 'call-last-kbd-macro)
 (global-set-key [f5] 'revert-buffer)
 (global-set-key "\C-z" 'undo)
@@ -36,6 +37,7 @@
 ; (global-set-key "\C-t" 'rails/resources/toggle-test)
 (global-set-key (kbd "C-t") 'ruby-test-toggle-implementation-and-specification)
 (global-set-key "\M-z" 'zap-up-to-char)
+(global-set-key "\C-x\C-b" 'buffer-menu) ;; so the buffer list appears in the current window
 
 ;;; bindings to custom functions
 (global-set-key (kbd "C-M-<up>") 'duplicate-line-up)
@@ -239,6 +241,15 @@
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
+;;; Taken from http://www.emacswiki.org/emacs/EmacsClient
+;;; use close buffer key for ending client session
+(add-hook 'server-switch-hook
+	  (lambda ()
+	    (when (current-local-map)
+	      (use-local-map (copy-keymap (current-local-map))))
+	    (when server-buffer-clients
+	      (local-set-key (kbd "C-x k") 'server-edit))))
+
 ;;; Taken from http://www.emacswiki.org/emacs/AutoIndentation#SmartPaste
 
 (dolist (command '(yank yank-pop))
@@ -283,3 +294,7 @@
 ;   Replace regexp with \#.
 
 (setq ruby-insert-encoding-magic-comment nil)
+
+;; emacsclient calls to work
+(server-start)
+; (add-hook 'after-init-hook 'server-start)
