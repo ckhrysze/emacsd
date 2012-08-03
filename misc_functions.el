@@ -1,3 +1,11 @@
+;; https://github.com/gaizka/misc-scripts
+(defun search-apidock-rails ()
+  "Search current word in apidock for rails"
+  (interactive)
+  (let* ((word-at-point (thing-at-point 'symbol))
+	 (word (read-string "Search apidock for? " word-at-point)))
+    (browse-url (concat "http://apidock.com/rails/" word))))
+
 ;; A cool gist followed by some help from stackoverflow
 ;; https://gist.github.com/1683375
 ;; http://stackoverflow.com/questions/9184243/how-do-i-list-non-ecb-windows-in-emacs

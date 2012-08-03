@@ -13,7 +13,7 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (scroll-bar-mode -1)
 
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/") 
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
 			 ("gnu" . "http://elpa.gnu.org/packages/")))
 
 (require 'solarized-definitions)
@@ -82,6 +82,9 @@
 (setq ruby-deep-indent-paren-style nil)
 (setq ruby-deep-arglist nil)
 
+'(require 'ruby-mode-indent-fix)
+
+
 ;; rinari
 ;; (require 'rinari)
 
@@ -102,6 +105,14 @@
 ;; more typical line numbers
 (line-number-mode 1)
 ;; (global-linum-mode 1)
+
+
+(require 'cmake-mode)
+(setq auto-mode-alist
+      (append '(("CMakeLists\\.txt\\'" . cmake-mode)
+		("\\.cmake\\'" . cmake-mode))
+	      auto-mode-alist))
+
 
 (eval-after-load "icomplete" '(progn (require 'icomplete+)))
 
@@ -162,18 +173,18 @@
 (provide 'semantic-load)
 
 (require 'ecb)
-;; 
+;;
 ;; (require 'ecb-autoloads)
 ;; (add-hook 'ecb-before-activate-hook
 ;; 	  (function
 ;; 	   (lambda ()
 ;; 	     (global-ede-mode 1)
-;; 	     ;; Enable semantic. Causes the "Development" main menu to 
+;; 	     ;; Enable semantic. Causes the "Development" main menu to
 ;; 	     be added.
 ;; 	     (semantic-mode 1)
-;; 	     ;; If enabled, semantic inserts lines in the code buffer 
+;; 	     ;; If enabled, semantic inserts lines in the code buffer
 ;; 	     above the tags
-;; 	     ;; it is tracking, and highlights things like #includes 
+;; 	     ;; it is tracking, and highlights things like #includes
 ;; 	     (dflt=nil)
 ;; 	     (global-semantic-decoration-mode 1)
 ;; 	     ;; dflt=nil
@@ -279,7 +290,7 @@
      (message "Copied line")
      (list (line-beginning-position)
 	   (line-beginning-position 2)))))
- 
+
 (defadvice kill-region (before slick-cut activate compile)
   "When called interactively with no active region, kill a single line instead."
   (interactive
