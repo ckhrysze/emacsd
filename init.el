@@ -104,7 +104,7 @@
 
 ;; more typical line numbers
 (line-number-mode 1)
-;; (global-linum-mode 1)
+(global-linum-mode 1)
 
 
 (require 'cmake-mode)
