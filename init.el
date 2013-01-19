@@ -17,7 +17,7 @@
 			 ("gnu" . "http://elpa.gnu.org/packages/")))
 
 (require 'solarized-definitions)
-(create-solarized-theme light)
+(create-solarized-theme dark)
 
 
 ;;; global key settings
@@ -91,6 +91,7 @@
 (load "~/.emacs.d/nxhtml/autostart.el")
 
 (add-to-list 'auto-mode-alist '("\\.html\\.erb$" . eruby-nxhtml-mumamo-mode))
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 
 ;(pymacs-load "pymdev" "pymdev-")
 
