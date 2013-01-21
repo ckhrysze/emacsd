@@ -17,7 +17,6 @@
 			 ("gnu" . "http://elpa.gnu.org/packages/")))
 
 (require 'solarized-definitions)
-(create-solarized-theme light)
 
 
 ;;; global key settings
