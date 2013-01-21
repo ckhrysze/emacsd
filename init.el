@@ -17,7 +17,6 @@
 			 ("gnu" . "http://elpa.gnu.org/packages/")))
 
 (require 'solarized-definitions)
-(create-solarized-theme dark)
 
 
 ;;; global key settings
@@ -85,13 +84,11 @@
 '(require 'ruby-mode-indent-fix)
 
 
-;; rinari
-;; (require 'rinari)
-
 (load "~/.emacs.d/nxhtml/autostart.el")
 
 (add-to-list 'auto-mode-alist '("\\.html\\.erb$" . eruby-nxhtml-mumamo-mode))
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
+(setq mumamo-background-colors nil)
 
 ;(pymacs-load "pymdev" "pymdev-")
 
