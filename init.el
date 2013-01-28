@@ -86,6 +86,7 @@
 
 (load "~/.emacs.d/nxhtml/autostart.el")
 
+(add-to-list 'auto-mode-alist '("\\.xml\\.erb$" . eruby-nxhtml-mumamo-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\.erb$" . eruby-nxhtml-mumamo-mode))
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 (setq mumamo-background-colors nil)

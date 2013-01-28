@@ -101,7 +101,7 @@ order."
   (add-to-list 'auto-mode-alist '("\\.htmlf\\'"    . nxhtml-mumamo-mode))
   (add-to-list 'auto-mode-alist '("\\.xhtml\\'"    . nxhtml-mumamo-mode))
   (add-to-list 'auto-mode-alist '("\\.xhtmlf\\'"   . nxhtml-mumamo-mode))
-  (add-to-list 'auto-mode-alist '("\\.php\\'"      . nxhtml-mumamo-mode))
+  ;; (add-to-list 'auto-mode-alist '("\\.php\\'"      . nxhtml-mumamo-mode))
   (add-to-list 'auto-mode-alist '("\\.phtml\\'"    . nxhtml-mumamo-mode))
   (add-to-list 'auto-mode-alist '("\\.jsp\\'"      . jsp-nxhtml-mumamo-mode))
   (add-to-list 'auto-mode-alist '("\\.gsp\\'"      . gsp-nxhtml-mumamo-mode))
