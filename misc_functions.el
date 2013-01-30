@@ -1,3 +1,28 @@
+;; http://emacs-fu.blogspot.com/2009/01/navigating-through-source-code-using.html
+(defun djcb-gtags-create-or-update ()
+  "create or update the gnu global tag file"
+  (interactive)
+  (if (not (= 0 (call-process "global" nil nil nil " -p"))) ; tagfile doesn't exist?
+      (let ((olddir default-directory)
+	    (topdir (read-directory-name
+		     "gtags: top of source tree:" default-directory)))
+	(cd topdir)
+	(shell-command "gtags && echo 'created tagfile'")
+	(cd olddir)) ; restore
+    ;;  tagfile already exists; update it
+    (shell-command "global -u && echo 'updated tagfile'")))
+
+(add-hook 'gtags-mode-hook
+	  (lambda()
+	    (local-set-key (kbd "M-.") 'gtags-find-tag)   ; find a tag, also M-.
+	    (local-set-key (kbd "M-,") 'gtags-find-rtag)))  ; reverse tag
+
+(add-hook 'php-mode-hook
+	  (lambda ()
+	    (gtags-mode t)
+	    (djcb-gtags-create-or-update)))
+
+
 ;; https://github.com/gaizka/misc-scripts
 (defun search-apidock-rails ()
   "Search current word in apidock for rails"
@@ -65,21 +90,21 @@
 ;; 	 ((file-exists-p possible-tags-file) (throw 'found-it possible-tags-file))
 ;; 	 ((string= "/TAGS" possible-tags-file) (error "no tags file found"))
 ;; 	 (t (find-tags-file-r (directory-file-name parent))))))
-;; 
+;;
 ;;     (if (buffer-file-name)
-;;         (catch 'found-it 
+;;         (catch 'found-it
 ;;           (find-tags-file-r (buffer-file-name)))
 ;;       (error "buffer is not visiting a file"))))
-;; 
+;;
 ;; (defun jds-set-tags-file-path ()
 ;;   "calls `jds-find-tags-file' to recursively search up the directory tree to find
 ;; a file named 'TAGS'. If found, set 'tags-table-list' with that path as an argument
 ;; otherwise raises an error."
 ;;   (interactive)
 ;;   (setq tags-table-list (cons (jds-find-tags-file) tags-table-list)))
-;; 
+;;
 ;; ;; delay search the TAGS file after open the source file
-;; (add-hook 'emacs-startup-hook 
+;; (add-hook 'emacs-startup-hook
 ;; 	  '(lambda () (jds-set-tags-file-path)))
 
 (setq path-to-ctags "/usr/local/Cellar/ctags/5.8/bin/ctags") ;; <- your ctags path here
@@ -93,7 +118,7 @@
 
 ;; http://codereview.stackexchange.com/q/45/5601
 (defun ckhrysze-find-parent-tags (dir)
-  "Traverses the directory tree up to /home/[user]/ or / whichever comes first. 
+  "Traverses the directory tree up to /home/[user]/ or / whichever comes first.
    Returns either nil or the directory containing the first TAGS file it finds."
   (interactive (list default-directory))
   (ckhrysze-find-parent-tags-rec (ckhrysze-build-tag-paths dir)))
@@ -104,7 +129,7 @@
 (defun ckhrysze-build-tag-paths (dir-string)
   (ckhrysze-build-tag-paths-rec (remove-if #'ckhrysze-empty-string? (split-string dir-string "/")) (list "/")))
 (defun ckhrysze-build-tag-paths-rec (steps acc)
-  (if (null steps) 
+  (if (null steps)
       (mapcar (lambda (p) (concat p "TAGS")) acc)
     (ckhrysze-build-tag-paths-rec (cdr steps)
 			 (cons (concat (car acc) (car steps) "/") acc))))
@@ -115,11 +140,11 @@
 
 ;; http://emacs-journey.blogspot.com/2009/08/lets-tag-and-load.html
 ;; (setq tags-directory "/path/to/tags/")
-;; (setq tag-list 
+;; (setq tag-list
 ;;       (list
 ;;        (cons '"/path/to/project1" (concat tags-directory "tags1"))
 ;;        (cons '"/path/to/project2" (concat tags-directory "tags2"))))
-;; 
+;;
 ;; (defun load-tags ()
 ;;   (interactive)
 ;;   (if (buffer-file-name)
@@ -133,12 +158,12 @@
 ;; 		      (setq tags-file-name nil)
 ;; 		      (setq tags-table-list nil)
 ;; 		      (visit-tags-table (cdr tag-cons))))))))))
-;; 
+;;
 ;; (defun switch-to-buffer-and-load-tags ()
 ;;   (interactive)
 ;;   (ido-switch-buffer)
 ;;   (load-tags))
-;; 
+;;
 ;; (add-hook 'find-file-hook 'load-tags)
 
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings

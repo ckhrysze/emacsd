@@ -83,6 +83,9 @@
 
 '(require 'ruby-mode-indent-fix)
 
+(autoload 'gtags-mode "gtags" "" t)
+(require 'gtags)
+
 
 (load "~/.emacs.d/nxhtml/autostart.el")
 
