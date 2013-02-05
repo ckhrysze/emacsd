@@ -32,8 +32,8 @@
 (global-set-key "\M-w" 'clipboard-kill-ring-save)
 (global-set-key "\C-y" 'clipboard-yank)
 (global-set-key "\C-v" 'clipboard-yank)
-; (global-set-key (kbd "C-;") 'rails/goto)
-; (global-set-key "\C-t" 'rails/resources/toggle-test)
+;; (global-set-key (kbd "C-;") 'rails/goto)
+;; (global-set-key "\C-t" 'rails/resources/toggle-test)
 (global-set-key (kbd "C-t") 'ruby-test-toggle-implementation-and-specification)
 (global-set-key "\M-z" 'zap-up-to-char)
 (global-set-key "\C-x\C-b" 'buffer-menu) ;; so the buffer list appears in the current window
@@ -54,7 +54,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq font-lock-maximum-decoration t)
 (setq save-abbrevs t)
-;(delete-selection-mode 1)
+;; (delete-selection-mode 1)
 (column-number-mode 1)
 
 (put 'upcase-region 'disabled nil)
@@ -95,7 +95,7 @@
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 (setq mumamo-background-colors nil)
 
-;(pymacs-load "pymdev" "pymdev-")
+					;(pymacs-load "pymdev" "pymdev-")
 
 (autoload 'mode-compile "mode-compile"
   "Command to compile current buffer file based on the major mode" t)
@@ -152,10 +152,10 @@
 (setq mouse-wheel-follow-mouse t) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 
-; for xml files, use nxml-mode instead of sgml-mode
+;; for xml files, use nxml-mode instead of sgml-mode
 (add-to-list 'auto-mode-alist '("\\.xml$" . nxml-mode))
 
-;These lines are required for ECB
+;; These lines are required for ECB
 ;; (setq semantic-load-turn-everything-on t)
 ;; (require 'semantic-load)
 
@@ -166,7 +166,7 @@
             backup-directory-alist))
 
 
-; This installs ecb - it is activated with M-x ecb-activate
+;; This installs ecb - it is activated with M-x ecb-activate
 (require 'semantic/analyze)
 (provide 'semantic-analyze)
 (provide 'semantic-ctxt)
@@ -218,8 +218,8 @@
 
 
 ;;; For rails development
-; (require 'rails-autoload)
-; (require 'haml-mode)
+					; (require 'rails-autoload)
+					; (require 'haml-mode)
 
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
@@ -302,13 +302,13 @@
 	   (line-beginning-position 2)))))
 
 ;;; Notes
-; auto increment magic (thank yegge!)
-; M-x replace-regexp
-;   Replace regexp: \(.+:\)
-;   Replace regexp with \#.
+;; auto increment magic (thank yegge!)
+;; M-x replace-regexp
+;;   Replace regexp: \(.+:\)
+;;   Replace regexp with \#.
 
 (setq ruby-insert-encoding-magic-comment nil)
 
-;; emacsclient calls to work
+;; to let emacsclient calls work
 (server-start)
-; (add-hook 'after-init-hook 'server-start)
+;; (add-hook 'after-init-hook 'server-start)

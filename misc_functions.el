@@ -27,7 +27,7 @@
 	    (gtags-mode t)
 	    (djcb-gtags-create-or-update)
 	    ;; and add some better formatting options
-	    (local-set-key [f8] 'phplint-thisfile)))
+	    (local-set-key [f8] 'phplint-thisfile)
 	    (setq c-basic-offset 2)
 	    (setq indent-tabs-mode nil)
 	    (setq fill-column 78)
@@ -149,7 +149,7 @@
   (if (null steps)
       (mapcar (lambda (p) (concat p "TAGS")) acc)
     (ckhrysze-build-tag-paths-rec (cdr steps)
-			 (cons (concat (car acc) (car steps) "/") acc))))
+				  (cons (concat (car acc) (car steps) "/") acc))))
 
 (defun ckhrysze-empty-string? (s) (equalp s ""))
 
