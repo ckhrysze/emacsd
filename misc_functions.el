@@ -25,6 +25,7 @@
 (add-hook 'php-mode-hook
 	  (lambda ()
 	    (gtags-mode t)
+	    (autopair-mode)
 	    (djcb-gtags-create-or-update)
 	    ;; and add some better formatting options
 	    (local-set-key [f8] 'phplint-thisfile)
