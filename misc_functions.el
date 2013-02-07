@@ -12,6 +12,11 @@
     ;;  tagfile already exists; update it
     (shell-command "global -u && echo 'updated tagfile'")))
 
+;; http://prajwalaa.wordpress.com/2009/03/19/using-emacs-to-edit-php-files/
+(defun phplint-thisfile ()
+  (interactive)
+  (compile (format "php -l %s" (buffer-file-name))))
+
 (add-hook 'gtags-mode-hook
 	  (lambda()
 	    (local-set-key (kbd "M-.") 'gtags-find-tag)   ; find a tag, also M-.
@@ -20,7 +25,20 @@
 (add-hook 'php-mode-hook
 	  (lambda ()
 	    (gtags-mode t)
-	    (djcb-gtags-create-or-update)))
+	    (autopair-mode)
+	    (djcb-gtags-create-or-update)
+	    ;; and add some better formatting options
+	    (local-set-key [f8] 'phplint-thisfile)
+	    (setq c-basic-offset 2)
+	    (setq indent-tabs-mode nil)
+	    (setq fill-column 78)
+	    (add-hook 'before-save-hook 'delete-trailing-whitespace)
+	    (c-set-offset 'case-label '+)
+	    (c-set-offset 'arglist-close 0)
+	    (c-set-offset 'arglist-intro '+) ; for FAPI arrays and DBTNG
+	    (c-set-offset 'arglist-cont-nonempty 'c-lineup-math) ; for DBTNG fields and values
+	    ))
+
 
 
 ;; https://github.com/gaizka/misc-scripts
@@ -132,7 +150,7 @@
   (if (null steps)
       (mapcar (lambda (p) (concat p "TAGS")) acc)
     (ckhrysze-build-tag-paths-rec (cdr steps)
-			 (cons (concat (car acc) (car steps) "/") acc))))
+				  (cons (concat (car acc) (car steps) "/") acc))))
 
 (defun ckhrysze-empty-string? (s) (equalp s ""))
 
