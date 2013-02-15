@@ -11,7 +11,7 @@ private \$${2:field};$0
 */
 public function get${2:$(upcase-initials text)}()
 {
-	return \$$2;
+	return \$this->$2;
 }
 
 /**
@@ -19,5 +19,5 @@ public function get${2:$(upcase-initials text)}()
 */
 public function set${2:$(upcase-initials text)}(\$value)
 {
-	\$$2 = \$value;
+	\$this->$2 = \$value;
 }
