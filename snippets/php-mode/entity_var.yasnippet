@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name: Entity instance var
+# key: ent
+# expand-env: ((yas/indent-line 'auto) (yas/also-auto-indent-first-line 'y))
+# --
+protected \$${1:field};$0
+
+/**
+* @return $1
+*/
+public function get${1:$(upcase-initials text)}()
+{
+	return \$this->$1;
+}
+
+/**
+* @param $1
+*/
+public function set${1:$(upcase-initials text)}(\$$1)
+{
+	\$this->$1 = \$$1;
+}

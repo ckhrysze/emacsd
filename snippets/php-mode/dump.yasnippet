@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: error_log
-# key: err
+# name: dump
+# key: dump
 # expand-env: ((yas/indent-line 'auto))
 # --
-error_log("${msg}");
+error_log(print_r(\$${1}, true));
