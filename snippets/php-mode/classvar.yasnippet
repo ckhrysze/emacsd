@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# name: classvar
+# key: priv
+# expand-env: ((yas/indent-line 'auto))
+# --
+// @var ${1:string}
+private \$${2:field};$0
+
+/**
+* @return $1
+*/
+public function get${2:$(upcase-initials text)}()
+{
+	return \$this->$2;
+}
+
+/**
+*
+*/
+public function set${2:$(upcase-initials text)}(\$value)
+{
+	\$this->$2 = \$value;
+}

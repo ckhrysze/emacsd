@@ -18,6 +18,11 @@
 
 (require 'solarized-definitions)
 
+;;; setup yasnippets
+(add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
+(require 'yasnippet)
+(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+(yas-global-mode 1)
 
 ;;; global key settings
 (global-set-key [f1] 'goto-line)
@@ -37,6 +42,7 @@
 (global-set-key (kbd "C-t") 'ruby-test-toggle-implementation-and-specification)
 (global-set-key "\M-z" 'zap-up-to-char)
 (global-set-key "\C-x\C-b" 'buffer-menu) ;; so the buffer list appears in the current window
+(global-set-key (kbd "M-t") 'helm-mini)
 
 ;;; bindings to custom functions
 (global-set-key (kbd "C-M-<up>") 'duplicate-line-up)
@@ -68,8 +74,8 @@
 
 (setq mac-command-modifier 'meta)
 
-
 (require 'misc_functions)
+
 
 (require 'autopair)
 ;; (autopair-global-mode) ;; enable autopair in all buffers
@@ -140,9 +146,9 @@
 
 ;;; messing with colors
 ;; see http://www.gnu.org/software/emacs/manual/html_node/emacs/Standard-Faces.html
-(set-face-background 'modeline          "#ccccff")
-(set-face-background 'modeline-inactive "#cccccc")
-(set-face-background 'fringe "#fcfcfc")
+;; (set-face-background 'modeline          "#ccccff")
+;; (set-face-background 'modeline-inactive "#cccccc")
+;; (set-face-background 'fringe "#fcfcfc")
 
 
 ;;; as per http://www.emacswiki.org/emacs/SmoothScrolling try to make mouse scrolling sane
@@ -166,16 +172,19 @@
             backup-directory-alist))
 
 
-;; This installs ecb - it is activated with M-x ecb-activate
-(require 'semantic/analyze)
-(provide 'semantic-analyze)
-(provide 'semantic-ctxt)
-(provide 'semanticdb)
-(provide 'semanticdb-find)
-(provide 'semanticdb-mode)
-(provide 'semantic-load)
+(require 'nav)
+(nav-disable-overeager-window-splitting)
 
-(require 'ecb)
+;; ;; This installs ecb - it is activated with M-x ecb-activate
+;; (require 'semantic/analyze)
+;; (provide 'semantic-analyze)
+;; (provide 'semantic-ctxt)
+;; (provide 'semanticdb)
+;; (provide 'semanticdb-find)
+;; (provide 'semanticdb-mode)
+;; (provide 'semantic-load)
+;; 
+;; (require 'ecb)
 ;;
 ;; (require 'ecb-autoloads)
 ;; (add-hook 'ecb-before-activate-hook
@@ -264,6 +273,10 @@
 	    (when server-buffer-clients
 	      (local-set-key (kbd "C-x k") 'server-edit))))
 
+
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
 ;;; Taken from http://www.emacswiki.org/emacs/AutoIndentation#SmartPaste
 
 (dolist (command '(yank yank-pop))
@@ -312,3 +325,5 @@
 ;; to let emacsclient calls work
 (server-start)
 ;; (add-hook 'after-init-hook 'server-start)
+
+(setq yas/root-directory (expand-file-name "~/.emacs.d/snippets"))
