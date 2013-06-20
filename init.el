@@ -42,7 +42,7 @@
 (global-set-key (kbd "C-t") 'ruby-test-toggle-implementation-and-specification)
 (global-set-key "\M-z" 'zap-up-to-char)
 (global-set-key "\C-x\C-b" 'buffer-menu) ;; so the buffer list appears in the current window
-(global-set-key (kbd "M-t") 'helm-mini)
+;; (global-set-key (kbd "M-t") 'helm-mini)
 
 ;;; bindings to custom functions
 (global-set-key (kbd "C-M-<up>") 'duplicate-line-up)
@@ -183,7 +183,7 @@
 ;; (provide 'semanticdb-find)
 ;; (provide 'semanticdb-mode)
 ;; (provide 'semantic-load)
-;; 
+;;
 ;; (require 'ecb)
 ;;
 ;; (require 'ecb-autoloads)
