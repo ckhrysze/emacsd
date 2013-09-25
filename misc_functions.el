@@ -1,3 +1,15 @@
+;; http://stackoverflow.com/questions/2416655/file-path-to-clipboard-in-emacs
+(defun copy-file-name-to-clipboard ()
+  "Put the current file name on the clipboard"
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (let ((x-select-enable-clipboard t)) (kill-new filename))
+      )))
+
+
 ;; http://emacs-fu.blogspot.com/2009/01/navigating-through-source-code-using.html
 (defun djcb-gtags-create-or-update ()
   "create or update the gnu global tag file"
@@ -10,7 +22,7 @@
 	(shell-command "gtags && echo 'created tagfile'")
 	(cd olddir)) ; restore
     ;;  tagfile already exists; update it
-    (shell-command "global -u && echo 'updated tagfile'")))
+    (shell-command "/usr/local/bin/global -u && echo 'updated tagfile'")))
 
 ;; http://prajwalaa.wordpress.com/2009/03/19/using-emacs-to-edit-php-files/
 (defun phplint-thisfile ()

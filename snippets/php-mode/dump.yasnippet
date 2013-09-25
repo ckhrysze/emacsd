@@ -3,4 +3,4 @@
 # key: dump
 # expand-env: ((yas/indent-line 'auto))
 # --
-error_log(print_r(\$${1}, true));
+error_log("${1}" . print_r(\$${2}, true));

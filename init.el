@@ -53,6 +53,12 @@
 (global-set-key (kbd "C--") 'decrement-number-at-point)
 (global-set-key (kbd "C-.") 'find-next-tag)
 
+;;; Make php function calls a bit easier
+(global-set-key (kbd "C-;") (lambda ()
+			      (interactive)
+			      (insert "->")))
+
+
 ;;; global settings
 (setq inhibit-startup-message t)
 (global-font-lock-mode t)
@@ -101,7 +107,17 @@
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 (setq mumamo-background-colors nil)
 
-					;(pymacs-load "pymdev" "pymdev-")
+;; (pymacs-load "pymdev" "pymdev-")
+
+
+;; Workaround the annoying warnings:
+;;    Warning (mumamo-per-buffer-local-vars):
+;;    Already 'permanent-local t: buffer-file-name
+(when (and (equal emacs-major-version 24)
+           (equal emacs-minor-version 2))
+  (eval-after-load "mumamo"
+    '(setq mumamo-per-buffer-local-vars
+           (delq 'buffer-file-name mumamo-per-buffer-local-vars))))
 
 (autoload 'mode-compile "mode-compile"
   "Command to compile current buffer file based on the major mode" t)
@@ -259,6 +275,7 @@
 
 
 (autoload 'javascript-mode "javascript" nil t)
+(setq js-indent-level 2)
 
 ;; Someones modified version of Yegge's js mode
 (autoload 'js2-mode "js2-mode" nil t)
