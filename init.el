@@ -2,6 +2,9 @@
 (setq debug-on-error t)
 (setq stack-trace-on-error 1)
 
+(setq exec-path (append exec-path '("~/Downloads/flex_sdk_4/bin")))
+
+
 ;;; add to the load path
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
     (let* ((my-lisp-dir "~/.emacs.d/")
@@ -60,6 +63,11 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq font-lock-maximum-decoration t)
 (setq save-abbrevs t)
+(setq-default indent-tabs-mode nil)
+(setq c-basic-indent 2)
+(setq tab-width 4)
+(setq indent-tabs-mode nil)
+
 ;; (delete-selection-mode 1)
 (column-number-mode 1)
 
@@ -221,10 +229,15 @@
 (require 'ruby-test)
 
 ;;; actionscript
-;; (require 'actionscript-mode)
-;; (add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
+(require 'actionscript-mode)
+(add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
+(setq-default indent-tabs-mode nil)
+(defun actionscript-custom ()
+  "actionscript-mode-hook"
+  (set (make-local-variable 'indent-tabs-mode) t))
 
-
+(add-hook 'actionscript-mode-hook
+	  '(lambda() (actionscript-custom)))
 
 ;;; For rails development
 					; (require 'rails-autoload)
