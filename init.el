@@ -3,7 +3,7 @@
 (setq stack-trace-on-error 1)
 
 (setq exec-path (append exec-path '("~/Downloads/flex_sdk_4/bin")))
-
+(setq exec-path (append exec-path '("/usr/local/bin")))
 
 ;;; add to the load path
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
@@ -80,7 +80,6 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-(setq exec-path (append exec-path '("/usr/local/bin")))
 (autoload 'ack-same "full-ack" nil t)
 (autoload 'ack "full-ack" nil t)
 (autoload 'ack-find-same-file "full-ack" nil t)
@@ -112,6 +111,17 @@
 (add-to-list 'auto-mode-alist '("\\.xml\\.erb$" . eruby-nxhtml-mumamo-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\.erb$" . eruby-nxhtml-mumamo-mode))
 
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 (setq mumamo-background-colors nil)
 
@@ -122,7 +132,7 @@
 ;;    Warning (mumamo-per-buffer-local-vars):
 ;;    Already 'permanent-local t: buffer-file-name
 (when (and (equal emacs-major-version 24)
-           (equal emacs-minor-version 2))
+           (> emacs-minor-version 1))
   (eval-after-load "mumamo"
     '(setq mumamo-per-buffer-local-vars
            (delq 'buffer-file-name mumamo-per-buffer-local-vars))))
@@ -265,6 +275,11 @@
 (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
+
+(require 'groovy-mode)
+(require 'groovy-electric)
+(add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
+(add-to-list 'auto-mode-alist '("\.gradle$" . groovy-mode))
 
 ;; https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
 (require 'yaml-mode)

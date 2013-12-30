@@ -1,1 +1,12 @@
 Emacs config. This probably has a fairly ruby bent, with a recent focus on non-html php files.
+
+Snippets from the wild:
+
+Taken from: http://irreal.org/blog/?p=895
+(require 'tramp)
+(add-to-list 'tramp-default-proxies-alist
+             '(nil "\\`root\\'" "/ssh:%h:"))
+(add-to-list 'tramp-default-proxies-alist
+             '((regexp-quote (system-name)) nil nil))
+
+Then you can edit remote root files with 【Ctrl+x ctrl+f】 /sudo:root@remote-host:<path-to-root-owned-file>.
