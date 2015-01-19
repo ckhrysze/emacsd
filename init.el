@@ -267,11 +267,6 @@
 (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 
-(require 'groovy-mode)
-(require 'groovy-electric)
-(add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
-(add-to-list 'auto-mode-alist '("\.gradle$" . groovy-mode))
-
 ;; https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
