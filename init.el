@@ -22,16 +22,6 @@
   (unless (package-installed-p package)
     (package-install package)))
 
-;;; global key settings
-(global-set-key [f2] 'server-edit)
-(global-set-key [f4] 'call-last-kbd-macro)
-(global-set-key "\C-z" 'undo)
-(global-set-key "\C-w" 'clipboard-kill-region)
-(global-set-key "\M-w" 'clipboard-kill-ring-save)
-(global-set-key "\C-y" 'clipboard-yank)
-(global-set-key "\C-v" 'clipboard-yank)
-(global-set-key "\C-x\C-b" 'buffer-menu)
-
 ;;; global settings
 (setq inhibit-startup-message t)
 (show-paren-mode t)
@@ -54,6 +44,7 @@
 (add-to-list 'load-path "~/.emacs.d/elisp/")
 (load-library "functions")
 (load-library "hooks")
+(load-library "keybindings")
 
 ;;; enabled some 'advanced' features
 (put 'upcase-region 'disabled nil)
@@ -69,6 +60,7 @@
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.eex\\'" . web-mode))
 
 (server-start)
 
