@@ -1,5 +1,4 @@
 ;;; Taken from http://www.emacswiki.org/emacs/EmacsClient
-;;; use close buffer key for ending client session
 (add-hook 'server-switch-hook
 	  (lambda ()
 	    (when (current-local-map)
@@ -8,3 +7,5 @@
 	      (local-set-key (kbd "C-x k") 'server-edit))))
 
 (add-hook 'web-mode-hook 'ckhrysze-web-mode-hook)
+(add-hook 'elixir-mode-hook 'ckhrysze-elixir-mode-hook)
+
