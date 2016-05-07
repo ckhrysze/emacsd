@@ -22,6 +22,10 @@
   (unless (package-installed-p package)
     (package-install package)))
 
+;;; make the path better on mac
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
 ;;; global settings
 (setq inhibit-startup-message t)
 (show-paren-mode t)
