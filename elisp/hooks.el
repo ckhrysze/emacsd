@@ -9,3 +9,4 @@
 (add-hook 'web-mode-hook 'ckhrysze-web-mode-hook)
 (add-hook 'elixir-mode-hook 'ckhrysze-elixir-mode-hook)
 
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
