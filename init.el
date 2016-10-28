@@ -8,7 +8,7 @@
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
 			 ("melpa" . "http://melpa.org/packages/")
 			 ("gnu" . "http://elpa.gnu.org/packages/")
-			 ("marmalade" . "http://marmalade-repo.org/packages/")))
+			 ))
 
 ; activate all the packages (in particular autoloads)
 (package-initialize)
@@ -37,10 +37,13 @@
 (scroll-bar-mode -1)
 (ido-mode t)
 (setq ido-enable-flex-matching t)
-(setq backup-directory-alist nil)
-(setq backup-directory-alist
-      (cons (cons "\\.*$" (expand-file-name "~/.emacs.d/eback"))
-            backup-directory-alist))
+
+;;; git it my backup system, and I work nearly 100% on my own machine
+(setq create-lockfiles nil
+      auto-save-list-file-prefix nil
+      backup-inhibited t
+      make-backup-files nil
+      auto-save-default nil)
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
