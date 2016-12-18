@@ -7,5 +7,7 @@
 	      (local-set-key (kbd "C-x k") 'server-edit))))
 
 (add-hook 'web-mode-hook 'ckhrysze-web-mode-hook)
-(add-hook 'elixir-mode-hook 'ckhrysze-elixir-mode-hook)
 
+(require 'alchemist)
+(add-hook 'elixir-mode-hook 'alchemist-mode)
+(add-hook 'elixir-mode-hook 'ckhrysze-elixir-mode-hook)
