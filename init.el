@@ -1,30 +1,22 @@
 (setq debug-on-error t)
 
-;; (require 'package)
-;; list the packages you want
-(setq package-list '(web-mode window-numbering color-theme-solarized))
-
-; list the repositories containing them
-(setq package-archives '(("elpa" . "http://tromey.com/elpa/")
-			 ("melpa" . "http://melpa.org/packages/")
-			 ("gnu" . "http://elpa.gnu.org/packages/")
-			 ))
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 
 ; activate all the packages (in particular autoloads)
 (package-initialize)
 
-; fetch the list of packages available 
+; fetch the list of packages available
 (unless package-archive-contents
   (package-refresh-contents))
+
+(setq package-list '(web-mode window-numbering use-package))
 
 ; install the missing packages
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
-
-;;; make the path better on mac
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
 
 ;;; global settings
 (setq inhibit-startup-message t)
@@ -38,7 +30,7 @@
 (ido-mode t)
 (setq ido-enable-flex-matching t)
 
-;;; git it my backup system, and I work nearly 100% on my own machine
+;;; git is my backup system, and I work nearly 100% on my own machine
 (setq create-lockfiles nil
       auto-save-list-file-prefix nil
       backup-inhibited t
@@ -60,7 +52,6 @@
 (setq mac-command-modifier 'meta) ;; so I don't go crazy on a mac
 
 ;;; package settings
-;; (require 'window-numbering)
 (window-numbering-mode 1)
 
 ;;; web-mode setup
@@ -69,7 +60,8 @@
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.eex\\'" . web-mode))
 
-(server-start)
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
 
-;;; not sure these are still uses
-;; (setq exec-path (append exec-path '("/usr/local/bin")))
+(server-start)

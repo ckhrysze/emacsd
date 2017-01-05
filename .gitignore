@@ -1,6 +1,7 @@
 tramp
 elpa/
 eback/
+snippets/
 ido.last
 custom.el
 auto-save-list
