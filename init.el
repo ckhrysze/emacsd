@@ -6,7 +6,7 @@
 	web-mode
 	window-numbering
 	yaml-mode
-	projectile-mode
+	projectile
 	)
       )
 
