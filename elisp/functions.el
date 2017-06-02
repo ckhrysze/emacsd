@@ -14,26 +14,26 @@
   (interactive)
   (if (= (count-windows) 2)
       (let* ((this-win-buffer (window-buffer))
-	     (next-win-buffer (window-buffer (next-window)))
-	     (this-win-edges (window-edges (selected-window)))
-	     (next-win-edges (window-edges (next-window)))
-	     (this-win-2nd (not (and (<= (car this-win-edges)
-					 (car next-win-edges))
-				     (<= (cadr this-win-edges)
-					 (cadr next-win-edges)))))
-	     (splitter
-	      (if (= (car this-win-edges)
-		     (car (window-edges (next-window))))
-		  'split-window-horizontally
-		'split-window-vertically)))
-	(delete-other-windows)
-	(let ((first-win (selected-window)))
-	  (funcall splitter)
-	  (if this-win-2nd (other-window 1))
-	  (set-window-buffer (selected-window) this-win-buffer)
-	  (set-window-buffer (next-window) next-win-buffer)
-	  (select-window first-win)
-	  (if this-win-2nd (other-window 1))))))
+             (next-win-buffer (window-buffer (next-window)))
+             (this-win-edges (window-edges (selected-window)))
+             (next-win-edges (window-edges (next-window)))
+             (this-win-2nd (not (and (<= (car this-win-edges)
+                                         (car next-win-edges))
+                                     (<= (cadr this-win-edges)
+                                         (cadr next-win-edges)))))
+             (splitter
+              (if (= (car this-win-edges)
+                     (car (window-edges (next-window))))
+                  'split-window-horizontally
+                'split-window-vertically)))
+        (delete-other-windows)
+        (let ((first-win (selected-window)))
+          (funcall splitter)
+          (if this-win-2nd (other-window 1))
+          (set-window-buffer (selected-window) this-win-buffer)
+          (set-window-buffer (next-window) next-win-buffer)
+          (select-window first-win)
+          (if this-win-2nd (other-window 1))))))
 
 ;; A cool gist followed by some help from stackoverflow
 ;; https://gist.github.com/1683375
@@ -41,18 +41,18 @@
   "If you have 2 windows, it swaps them."
   (interactive)
   (cond ((not (= (count-windows) 2))
-	 (message "You need exactly 2 windows to do this."))
-	(t
-	 (let* ((w1 (first (window-list)))
-		(w2 (second (window-list)))
-		(b1 (window-buffer w1))
-		(b2 (window-buffer w2))
-		(s1 (window-start w1))
-		(s2 (window-start w2)))
-	   (set-window-buffer w1 b2)
-	   (set-window-buffer w2 b1)
-	   (set-window-start w1 s2)
-	   (set-window-start w2 s1)))))
+         (message "You need exactly 2 windows to do this."))
+        (t
+         (let* ((w1 (car (window-list)))
+                (w2 (cadr (window-list)))
+                (b1 (window-buffer w1))
+                (b2 (window-buffer w2))
+                (s1 (window-start w1))
+                (s2 (window-start w2)))
+           (set-window-buffer w1 b2)
+           (set-window-buffer w2 b1)
+           (set-window-start w1 s2)
+           (set-window-start w2 s1)))))
 
 ;; Not sure how it is that I grabbed this from the source, but
 ;; didn't already have it...
@@ -65,12 +65,12 @@
   (interactive "p\ncZap up to char: ")
   (let ((direction (if (>= arg 0) 1 -1)))
     (kill-region (point)
-		 (progn
-		   (forward-char direction)
-		   (unwind-protect
-		       (search-forward (char-to-string char) nil nil arg)
-		     (backward-char direction))
-		   (point)))))
+                 (progn
+                   (forward-char direction)
+                   (unwind-protect
+                       (search-forward (char-to-string char) nil nil arg)
+                     (backward-char direction))
+                   (point)))))
 
 (defun increment-number-at-point ()
   (interactive)
@@ -103,12 +103,25 @@
   (insert "|> ")
   )
 
+(defun ckhrysze-javascript-mode-hook ()
+  (setq js-indent-level 2)
+  )
+
 (defun ckhrysze-elixir-mode-hook ()
   "Hooks for extra keybindings in elixir mode"
   (local-set-key (kbd "C->") 'insert-elixir-pipe)
+  (local-set-key (kbd "C-;") 'insert-elixir-pipe)
   (add-hook 'before-save-hook
-	    (lambda ()
-	      (untabify (point-min) (point-max))))
+            (lambda ()
+              (untabify (point-min) (point-max))))
+  )
+
+(defun ckhrysze-python-mode-hook ()
+  (electric-pair-mode 1)
+  (flycheck-mode 1)
+  (pyvenv-activate "~/.venv/youcall/")
+  (add-to-list 'flycheck-checkers 'python-flake8)
+  (setq flycheck-checker 'python-flake8)
   )
 
 ;;; ask to create directories when appropriate on buffer creation
@@ -129,8 +142,8 @@
   "Move the current line up or down by N lines."
   (interactive "p")
   (let ((col (current-column))
-	start
-	end)
+        start
+        end)
     (beginning-of-line)
     (setq start (point))
     (end-of-line)
@@ -158,8 +171,8 @@
   "Copy the current line up or down by N lines."
   (interactive "p")
   (let ((col (current-column))
-	start
-	end)
+        start
+        end)
     (beginning-of-line)
     (setq start (point))
     (end-of-line)
@@ -170,7 +183,7 @@
       (forward-line -1)
       (insert line-text)
       (if (equal -1 n)
-	  (forward-line -1))
+          (forward-line -1))
       (forward-char col)
       )))
 
