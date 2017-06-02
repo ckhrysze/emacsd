@@ -18,7 +18,8 @@
 (require 'flycheck-pyflakes)
 ;;; (add-to-list 'flycheck-disabled-checkers 'python-pylint)
 
-(add-hook 'python-mode-hook 'ckhrysze-python-mode-hook)
+(add-hook 'hack-local-variables-hook 'run-local-vars-mode-hook)
+(add-hook 'python-mode-local-vars-hook 'ckhrysze-python-mode-hook)
 
 (add-hook 'yaml-mode-hook
           '(lambda ()

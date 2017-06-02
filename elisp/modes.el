@@ -11,6 +11,12 @@
 (setq ido-enable-flex-matching t)
 
 (window-numbering-mode 1)
+(flycheck-mode)
 
-;;;(require 'projectile)
-(projectile-mode 1)
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
+
+(use-package projectile
+  :config
+  (projectile-mode 1))

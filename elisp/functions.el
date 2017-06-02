@@ -118,11 +118,13 @@
 
 (defun ckhrysze-python-mode-hook ()
   (electric-pair-mode 1)
-  (flycheck-mode 1)
-  (pyvenv-activate "~/.venv/youcall/")
-  (add-to-list 'flycheck-checkers 'python-flake8)
-  (setq flycheck-checker 'python-flake8)
+  ;(pyvenv-activate venv-name)
+  ;(setq flycheck-checker pychecker)
   )
+
+(defun run-local-vars-mode-hook ()
+  "Run a hook for the major-mode after the local variables have been processed."
+  (run-hooks (intern (concat (symbol-name major-mode) "-local-vars-hook"))))
 
 ;;; ask to create directories when appropriate on buffer creation
 (defun my-create-non-existent-directory ()

@@ -5,14 +5,13 @@
       '(
 	web-mode
 	window-numbering
-	yaml-mode
-	projectile
+	flycheck
+	use-package
 	)
       )
 
 ;;; list the repositories containing them
-(setq package-archives '(("elpa" . "http://tromey.com/elpa/")
-			 ("melpa" . "http://melpa.org/packages/")
+(setq package-archives '(("melpa" . "http://melpa.org/packages/")
 			 ("gnu" . "http://elpa.gnu.org/packages/")
 			 ))
 ;;; activate all the packages (in particular autoloads)
@@ -27,7 +26,9 @@
   (unless (package-installed-p package)
     (package-install package)))
 
-(setq custom-file "~/.emacs.d/custom.el")
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(unless (file-exists-p custom-file)
+  (write-region "" "" custom-file))
 (load custom-file)
 
 (add-to-list 'load-path "~/.emacs.d/elisp/")
