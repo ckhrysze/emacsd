@@ -1,6 +1,8 @@
 ;;; global settings
 (setq inhibit-startup-message t)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 (fset 'yes-or-no-p 'y-or-n-p)
+(setq ring-bell-function 'ignore)
 (setq-default frame-title-format '("%f [%m]"))
 
 ;;; git is my backup system, and I work nearly 100% on my own machine

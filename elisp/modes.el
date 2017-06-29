@@ -13,6 +13,8 @@
 (window-numbering-mode 1)
 (flycheck-mode)
 
+(use-package smartparens-config)
+
 (use-package yasnippet
   :config
   (yas-global-mode 1))

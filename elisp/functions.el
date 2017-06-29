@@ -103,6 +103,12 @@
   (insert "|> ")
   )
 
+(defun elixir-newline-pipe ()
+  (interactive)
+  (newline)
+  (insert-elixir-pipe)
+  )
+
 (defun ckhrysze-javascript-mode-hook ()
   (setq js-indent-level 2)
   )
@@ -111,6 +117,9 @@
   "Hooks for extra keybindings in elixir mode"
   (local-set-key (kbd "C->") 'insert-elixir-pipe)
   (local-set-key (kbd "C-;") 'insert-elixir-pipe)
+  (local-set-key (kbd "C-<return>") 'elixir-newline-pipe)
+  (company-mode 1)
+  (smartparens-mode 1)
   (add-hook 'before-save-hook
             (lambda ()
               (untabify (point-min) (point-max))))
