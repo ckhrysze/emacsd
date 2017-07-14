@@ -22,3 +22,7 @@
 (use-package projectile
   :config
   (projectile-mode 1))
+
+(use-package direnv
+  :config
+  (direnv-mode 1))

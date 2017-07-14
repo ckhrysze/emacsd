@@ -1,3 +1,10 @@
+;; https://emacs.stackexchange.com/questions/169/how-do-i-reload-a-file-in-a-buffer
+;; Source: http://www.emacswiki.org/emacs-en/download/misc-cmds.el
+(defun revert-buffer-no-confirm ()
+    "Revert buffer without confirmation."
+    (interactive)
+    (revert-buffer t (not (buffer-modified-p))))
+
 ;; http://stackoverflow.com/questions/2416655/file-path-to-clipboard-in-emacs
 (defun copy-file-name-to-clipboard ()
   "Put the current file name on the clipboard"
@@ -105,7 +112,7 @@
 
 (defun elixir-newline-pipe ()
   (interactive)
-  (newline)
+  (newline-and-indent)
   (insert-elixir-pipe)
   )
 
