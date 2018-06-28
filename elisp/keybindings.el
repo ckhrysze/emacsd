@@ -15,4 +15,4 @@
 (global-set-key (kbd "C-+") 'increment-number-at-point)
 (global-set-key (kbd "C--") 'decrement-number-at-point)
 
-(global-set-key (kbd "C-x r") 'revert-buffer-no-confirm)
+(global-set-key (kbd "C-x C-r") 'revert-buffer-no-confirm)

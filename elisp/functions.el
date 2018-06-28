@@ -138,6 +138,16 @@
   ;(setq flycheck-checker pychecker)
   )
 
+(defun ckhrysze-go-mode-hook ()
+  (electric-pair-mode 1)
+  (setq tab-width 4)
+  (setq indent-tabs-mode 1)
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  ; (require 'go-autocomplete)
+  ; (require 'auto-complete-config)
+  ; (ac-config-default)
+  )
+
 (defun run-local-vars-mode-hook ()
   "Run a hook for the major-mode after the local variables have been processed."
   (run-hooks (intern (concat (symbol-name major-mode) "-local-vars-hook"))))
