@@ -8,6 +8,9 @@
 (global-set-key "\C-v" 'clipboard-yank)
 (global-set-key "\C-x\C-b" 'buffer-menu)
 
+(global-set-key (kbd "M-]") 'next-buffer)
+(global-set-key (kbd "M-[") 'previous-buffer)
+
 (global-set-key (kbd "C-M-<up>") 'duplicate-line-up)
 (global-set-key (kbd "C-M-<down>") 'duplicate-line-down)
 (global-set-key (kbd "M-<up>") 'move-line-up)

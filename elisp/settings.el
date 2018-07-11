@@ -1,9 +1,14 @@
 ;;; global settings
-(setq inhibit-startup-message t)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (fset 'yes-or-no-p 'y-or-n-p)
+
+(setq inhibit-startup-message t)
+(setq initial-scratch-message nil)
 (setq ring-bell-function 'ignore)
-(setq-default frame-title-format '("%f [%m]"))
+(setq require-final-newline t)
+
+(when window-system
+  (setq-default frame-title-format '(buffer-file-name "%f" (%b))))
 
 ;;; git is my backup system, and I work nearly 100% on my own machine
 (setq create-lockfiles nil

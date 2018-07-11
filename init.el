@@ -4,6 +4,7 @@
 (setq package-list
       '(
 	web-mode
+	yaml-mode
 	window-numbering
 	flycheck
 	use-package

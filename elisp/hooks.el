@@ -15,9 +15,6 @@
 (add-hook 'elixir-mode-hook 'alchemist-mode)
 (add-hook 'elixir-mode-hook 'ckhrysze-elixir-mode-hook)
 
-(require 'flycheck-pyflakes)
-;;; (add-to-list 'flycheck-disabled-checkers 'python-pylint)
-
 (add-hook 'hack-local-variables-hook 'run-local-vars-mode-hook)
 (add-hook 'python-mode-local-vars-hook 'ckhrysze-python-mode-hook)
 

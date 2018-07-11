@@ -2,6 +2,7 @@
 (column-number-mode 1)
 (line-number-mode 1)
 (global-linum-mode 1)
+(hl-line-mode 1)
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (scroll-bar-mode -1)
 
@@ -26,3 +27,16 @@
 (use-package direnv
   :config
   (direnv-mode 1))
+
+(use-package fringe-current-line
+  :config
+  (global-fringe-current-line-mode 1))
+
+(use-package ace-jump-mode
+  :config
+  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
+
+(use-package flycheck-pyflakes
+  :no-require t
+  :config
+  (add-to-list 'flycheck-disabled-checkers 'python-pylint))
