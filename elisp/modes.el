@@ -2,7 +2,7 @@
 (column-number-mode 1)
 (line-number-mode 1)
 (global-hl-line-mode 1)
-(global-linum-mode 1)
+(display-line-numbers-mode 1)
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (scroll-bar-mode -1)
 
