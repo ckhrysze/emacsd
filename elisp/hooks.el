@@ -23,3 +23,4 @@
              (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
 (add-hook 'go-mode-hook 'ckhrysze-go-mode-hook)
+(add-hook 'terraform-mode-hook #'terraform-format-on-save-mode)
