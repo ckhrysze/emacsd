@@ -6,6 +6,7 @@
 	web-mode
 	yaml-mode
 	window-numbering
+	dumb-jump
 	flycheck
 	use-package
 	)

@@ -116,10 +116,6 @@
   (insert-elixir-pipe)
   )
 
-(defadvice alchemist-project-root (around ckhrysze/alchemist-project-root activate)
-  (let ((alchemist-project-mix-project-indicator ".git"))
-    ad-do-it))
-
 ;;; advice bit taken from http://seancribbs.com/emacs.d
 ;;; which...I really need to go through his whole setup eventually
 (defun ckhrysze-elixir-mode-hook ()
@@ -128,7 +124,6 @@
   (local-set-key (kbd "C-<return>") 'elixir-newline-pipe)
   (company-mode 1)
   (smartparens-mode 1)
-  (ad-activate 'alchemist-project-root)
   (add-hook 'before-save-hook
             (lambda ()
 	      (when (eq major-mode 'elixir-mode)

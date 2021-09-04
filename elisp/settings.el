@@ -18,7 +18,9 @@
       auto-save-default nil)
 
 ;;; mac specific
-(when (memq window-system '(mac ns))
+;; (when (memq window-system '(mac ns))
+;;  (exec-path-from-shell-initialize))
+(when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta)
   (exec-path-from-shell-initialize))
 

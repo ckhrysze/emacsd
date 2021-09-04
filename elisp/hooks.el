@@ -8,13 +8,9 @@
 
 (add-hook 'web-mode-hook 'ckhrysze-web-mode-hook)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
 (add-hook 'js-mode-hook 'ckhrysze-javascript-mode-hook)
-
-(require 'alchemist)
-(add-hook 'elixir-mode-hook 'alchemist-mode)
 (add-hook 'elixir-mode-hook 'ckhrysze-elixir-mode-hook)
-
+(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 (add-hook 'hack-local-variables-hook 'run-local-vars-mode-hook)
 (add-hook 'python-mode-local-vars-hook 'ckhrysze-python-mode-hook)
 
